@@ -1,0 +1,134 @@
+{
+  "model": "SIMATIC IPC227E",
+  "manufacturer": "Siemens",
+  "svhc_score": 1,
+  "cpu": {
+    "count": 1,
+    "gold_pins": true,
+    "cores": 4,
+    "die_size": 0.01111,
+    "tdp": 15.1111,
+    "heatsink_weight": 0.01111,
+    "clock_speed": 2.1658
+  },
+  "ram": {
+    "count": 2,
+    "gold_pins": true,
+    "size": 8,
+    "die_size": 0.011111
+  },
+  "ssd": {
+    "count": 1,
+    "size": 450,
+    "die_size": 0.011111
+  },
+  "network_ports": 2,
+  "performance": {
+    "compute": {
+      "value": 138,
+      "unit": "GHz*bit"
+    },
+    "memorize": {
+      "value": 8,
+      "unit": "GB"
+    },
+    "store": {
+      "value": 450,
+      "unit": "GB"
+    },
+    "transfer": {
+      "value": 1,
+      "unit": "Gbps"
+    }
+  },
+  "power_profile": {
+    "compute": {
+      "profile": {
+        "2": 7.32,
+        "11": 7.48,
+        "21": 7.18,
+        "31": 7.98,
+        "41": 8.58,
+        "51": 9.26,
+        "61": 9.72,
+        "71": 10.04,
+        "81": 10.43,
+        "91": 10.58,
+        "100": 10.93
+      },
+      "avg": 9.05
+    },
+    "memorize": {
+      "profile": {
+        "0": 0,
+        "10": 0,
+        "50": 0,
+        "100": 0
+      },
+      "avg": 0.125
+    },
+    "store": {
+      "profile": {
+        "0": 0,
+        "10": 0,
+        "50": 0,
+        "100": 0
+      },
+      "avg": 0.038
+    },
+    "transfer": {
+      "profile": {
+        "0": 0,
+        "10": 0,
+        "50": 0,
+        "100": 0
+      },
+      "avg": 0.0
+    },
+    "total_avg": 10
+  },
+  "embedded_per_dbr": {
+    "CED": {
+      "compute": 458.4,
+      "memorize": 305.6,
+      "store": 152.8,
+      "transfer": 38.2,
+      "total": 955.0
+    },
+    "GWP": {
+      "compute": 33.024,
+      "memorize": 22.016,
+      "store": 11.008,
+      "transfer": 2.752,
+      "total": 68.8
+    },
+    "ADP": {
+      "compute": 0.0042,
+      "memorize": 0.0028,
+      "store": 0.0014,
+      "transfer": 0.0003,
+      "total": 0.0087
+    },
+    "Water": {
+      "compute": 6.96,
+      "memorize": 4.64,
+      "store": 2.32,
+      "transfer": 0.58,
+      "total": 14.5
+    },
+    "WEEE": {
+      "compute": 0.12,
+      "memorize": 0.08,
+      "store": 0.04,
+      "transfer": 0.01,
+      "total": 0.25
+    },
+    "TOX": {
+      "compute": 0.3333333333333333,
+      "memorize": 0.16666666666666666,
+      "store": 0.3333333333333333,
+      "transfer": 0.16666666666666666,
+      "total": 0
+    }
+  }
+}

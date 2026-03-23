@@ -1,0 +1,9 @@
+ALTER TABLE measuremententity DROP COLUMN ecodigit_score;
+ALTER TABLE measuremententity
+ADD COLUMN result_ecodigit_score DOUBLE PRECISION,
+ADD COLUMN result_adp DOUBLE PRECISION,
+ADD COLUMN result_ced DOUBLE PRECISION,
+ADD COLUMN result_gwp DOUBLE PRECISION,
+ADD COLUMN result_tox DOUBLE PRECISION,
+ADD COLUMN result_water DOUBLE PRECISION,
+ADD COLUMN result_weee DOUBLE PRECISION;

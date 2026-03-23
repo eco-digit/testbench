@@ -1,0 +1,15 @@
+<div class="dashboard__container">
+  <div class="dashboard__title">
+    <h4 class="mat-headline-medium">Welcome to Eco:Digit</h4>
+  </div>
+  <div class="dashboard__content">
+    <app-dashboard-eco-insight></app-dashboard-eco-insight>
+    <app-dashboard-application></app-dashboard-application>
+  </div>
+</div>
+<div class="floating-button" [ngClass]="{ 'sidebar-open': isHelpSidebarOpen }">
+  <a mat-fab extended (click)="openDialog()">
+    <mat-icon>add</mat-icon>
+    New Application
+  </a>
+</div>

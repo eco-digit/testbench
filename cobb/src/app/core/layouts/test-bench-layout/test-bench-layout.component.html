@@ -1,0 +1,19 @@
+<div class="layout__header">
+  <app-header></app-header>
+</div>
+<div class="layout__body">
+  <div class="layout__sidebar">
+    <app-sidebar></app-sidebar>
+  </div>
+
+  <div class="layout__content">
+    <div class="layout__content-column">
+      <app-breadcrumb class="layout__breadcrumbs"></app-breadcrumb>
+      <div class="layout__router">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+
+  <app-sidebar-help></app-sidebar-help>
+</div>

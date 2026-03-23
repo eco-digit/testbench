@@ -1,0 +1,2 @@
+from .calculate_cloud import calculate_public_cloud
+from .calculate_cloud import calculate_hyperscaler

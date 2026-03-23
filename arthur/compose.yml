@@ -1,0 +1,163 @@
+services:
+  arthur:
+    build: .
+    volumes:
+      - /dev/kvm:/dev/kvm           # Required access to KVM hardware
+      - /var/run/libvirt:/run/libvirt  # Access libvirtd socket
+      - ./config-docker.yaml:/arthur/app/config.yaml:ro
+      - /var/lib/libvirt/images:/var/lib/libvirt/images
+      - /var/lib/ecodigit/docker_shares:/var/lib/ecodigit/docker_shares
+    #entrypoint: ["tail", "-f", "/dev/null"]
+    privileged: true  # Required for full device access
+    network_mode: "host"
+    # depends_on:
+      # timescale:
+      #   condition: service_healthy
+      # minio:
+      #   condition: service_started
+      # rabbitmq:
+      #   condition: service_healthy
+
+# miles (android) service commented out for quicker startup
+
+ # minio:
+ #   image: minio/minio
+ #   command: server /data --console-address ':9001'
+  #   environment:
+  #     MINIO_ROOT_USER: ${MINIO_USER}
+  #     MINIO_ROOT_PASSWORD: ${MINIO_PASSWORD}
+  #   ports:
+  #     - '10000:9000'
+  #     - '10001:9001'
+  #   volumes:
+  #     - minio_data:/data
+  # rabbitmq:
+  #   image: rabbitmq:3-management
+  #   healthcheck:
+  #     test: rabbitmq-diagnostics -q ping
+  #     interval: 5s
+  #     timeout: 5s
+  #     retries: 5
+  #     start_period: 10s
+  #   ports:
+  #     - "10002:5672"
+  #     - "10003:15672"
+  #   environment:
+  #     RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+  #     RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+  #   volumes:
+  #     - rabbitmq_data:/var/lib/rabbitmq
+  # timescale:
+  #   image: timescale/timescaledb:latest-pg17
+  #   environment:
+  #     POSTGRES_USER: ${TIMESCALE_USER}
+  #     POSTGRES_PASSWORD: ${TIMESCALE_PASSWORD}
+  #     POSTGRES_DB: arthur
+  #   healthcheck:
+  #     test: [ "CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB" ]
+  #     interval: 5s
+  #     timeout: 5s
+  #     retries: 5
+  #     start_period: 10s
+  #   ports:
+  #     - "10004:5432"
+  #   volumes:
+  #     - timescale_data:/var/lib/postgresql/data
+  # redis:
+  #   image: redis:8.2.2-alpine
+  #   ports:
+  #     - "6379:6379"
+  #   networks:
+  #     - management_network2
+  # appium:
+  #   image: appium/appium:v2.18.0-p0
+  #   networks:
+  #     - management_network2
+  #     - internal_network
+  #   extra_hosts:
+  #     - "host.docker.internal:host-gateway"
+  #   environment:
+  #     - ANDROID_ADB_SERVER_ADDRESS=host.docker.internal
+  #   ports:
+  #     - "4723:4723"
+
+  # manager_headless:
+  #   build: ./miles/backend/management
+  #   depends_on:
+  #     - redis
+  #   networks:
+  #     - management_network2
+  #   extra_hosts:
+  #     - "host.docker.internal:host-gateway"
+  #   environment:
+  #     - PORT=8082
+  #     - REDIS_HOST=redis
+  #     - REDIS_PORT=6379
+  #     - QUEUE_NAME_UI_TESTS_JOBS=EcoDigitJobsUITests
+  #     - QUEUE_NAME_ANALYZER_JOBS=EcoDigitJobsAnalyzer
+  #     - QUEUE_NAME_STATUS_UPDATES=EcoDigitJobsStatusUpdates
+  #     # Spezifizieren, welcher Ordner für das Teilen von Job-Dateien genutzt wird
+  #     - JOB_DATA_DIR=/job_data
+  #     - DELETE_JOB_DATA_DIR_ON_STARTUP=FALSE
+  #     - HEADLESS_EMULATOR_AVAILABLE=TRUE
+  #   ports:
+  #     - "8082:8082"
+  #   volumes:
+  #     - "${ABSOLUT_PATH_TO_JOB_DATA_FOLDER}:/job_data"
+
+  # ui_test_worker:
+  #   build: ./miles/backend/worker/ui-test-worker
+  #   depends_on:
+  #     - redis
+  #   extra_hosts:
+  #     - "host.docker.internal:host-gateway"
+  #   networks:
+  #     - management_network2
+  #     - internal_network
+  #   volumes:
+  #     # Dafür sorgen, dass der Container selbst andere Docker container starten/stoppen kann
+  #     - "/var/run/docker.sock:/var/run/docker.sock"
+  #     # Den Ordner für geteilte Dateien mounten
+  #     - "${ABSOLUT_PATH_TO_JOB_DATA_FOLDER}:/job_data"
+  #   environment:
+  #     - REDIS_HOST=redis
+  #     - REDIS_PORT=6379
+  #     - QUEUE_NAME_INPUT=EcoDigitJobsUITests
+  #     - QUEUE_NAME_OUTPUT=EcoDigitJobsAnalyzer
+  #     - QUEUE_NAME_STATUS_UPDATES=EcoDigitJobsStatusUpdates
+  #     # Dafür sorgen, dass ADB sich gerade mit dem ADB-Server des echten Rechners verbindet
+  #     - ANDROID_ADB_SERVER_ADDRESS=host.docker.internal
+  #     # Spezifizieren, welcher Ordner für das Teilen von Job-Dateien genutzt wird
+  #     - JOB_DATA_DIR=/job_data
+  #     - HOST_PATH_TO_JOB_DIR=${ABSOLUT_PATH_TO_JOB_DATA_FOLDER}
+  #     - HOST_DOCKER_COMPOSE_PROJECT_NAME=${COMPOSE_PROJECT_NAME}
+  #     - TIME_OUT_IN_MINUTES=45
+
+  # perfetto_analyzer:
+  #   build: ./miles/backend/worker/perfetto-analyzer
+  #   depends_on:
+  #     - redis
+  #   #networks:
+  #   #  - management_network2
+  #   volumes:
+  #     # Den Ordner für geteilte Dateien mounten
+  #     - "${ABSOLUT_PATH_TO_JOB_DATA_FOLDER}:/job_data"
+  #   environment:
+  #     - REDIS_HOST=redis
+  #     - REDIS_PORT=6379
+  #     - QUEUE_NAME_INPUT=EcoDigitJobsAnalyzer
+  #     - QUEUE_NAME_STATUS_UPDATES=EcoDigitJobsStatusUpdates
+  #     - JOB_DATA_DIR=/job_data/
+
+
+
+networks:
+  # management_network2:
+  internal_network:
+    internal: true
+
+# volumes:
+  # timescale_data:
+  # rabbitmq_data:
+  # minio_data:
+

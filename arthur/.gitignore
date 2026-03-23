@@ -1,0 +1,22 @@
+# Docker images
+*.tar
+
+# Python virtual environment
+app/.venv
+
+# IDEs
+.vscode
+
+#app/config.yaml
+app/vnets_jobs
+
+machines/libvirt_images
+machines/isos/
+
+test_contexts/pkgd/
+
+tmp-measurement-results/
+logs_old/
+
+/shares/
+files/

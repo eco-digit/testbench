@@ -1,0 +1,39 @@
+<div class="dashboard__eco-insight">
+  <div class="dashboard__eco-insight-title">
+    <h5 class="mat-headline-small">Eco:Insights</h5>
+  </div>
+  <div class="dashboard__eco-insight-chart card-container">
+    <app-eco-insight-chart
+      class="dashboard__eco-insight-chart"
+    ></app-eco-insight-chart>
+  </div>
+  <div class="dashboard__eco-insight-metrics">
+    <div class="dashboard__eco-insight-metrics-box box--gwp card-container">
+      <div class="dashboard__eco-insight-metrics-box-2">
+        <p class="mat-title-medium">Global Warming Potential</p>
+        <p class="mat-body-small">in kg C02-eq (GWP)</p>
+        <p class="mat-display-medium">
+          {{ ecoData?.totalGlobalWarmingPotential ?? 0 | roundUp: 3 }}
+        </p>
+      </div>
+      <p class="mat-label-small">
+        Sum of the latest measurement per application within the last 30 days
+      </p>
+    </div>
+    <div class="dashboard__eco-insight-metrics-box box--weee card-container">
+      <div class="dashboard__eco-insight-metrics-box-2">
+        <p class="mat-title-medium">Waste Electrical and Electronic</p>
+        <p class="mat-body-small">in kg (WEEE)</p>
+        <p class="mat-display-medium">
+          {{
+            ecoData?.totalWasteElectricalAndElectronicEquipment ?? 0
+              | roundUp: 3
+          }}
+        </p>
+      </div>
+      <p class="mat-label-small">
+        Sum of the latest measurement per application within the last 30 days
+      </p>
+    </div>
+  </div>
+</div>

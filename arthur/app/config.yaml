@@ -1,0 +1,56 @@
+app:
+  port: 5000 # change for local installations
+  host: 0.0.0.0 # 0.0.0.0 means any
+  measurement_timeout: 10800 # in seconds, defaults to 3 hours
+  #measurement_prefix: measurement-
+  #application_variant_prefix: applicationvariant-
+
+
+hosting:
+  gm_username: arthur
+  gm_password: arthur
+  host_paths:
+    base: /home/((INSERT-USERNAME))/testbench/arthur # change username
+    tmp_measurement_subpath: tmp-measurement-results
+    tmp: /tmp/ecodigit/
+    libvirt_images: /var/lib/ecodigit/test_images
+    dummy_test_context: /home/((INSERT-USERNAME))/testbench/arthur/test_contexts #change username
+  guest_paths:
+    shared_mount: /home/arthur/shared_mount
+
+
+services:
+  minio:
+    host: localhost
+    port: 9000
+    user: minioadmin
+    password: minioadmin
+    application_variants_bucket: applicationvariants
+
+  timescale:
+    host: localhost
+    port: 5433
+    user: timescale_user
+    password: timescale_password
+    database: arthur # change database name for multi user installations
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    user: rabbitmq
+    password: rabbitmqpassword
+
+  miles:
+    host: 127.0.0.1
+    port: 8081
+    is_stub: False
+
+# Logging
+logging:
+  log_level: DEBUG
+  log_path: /home/((INSERT-USERNAME))/testbench/arthur/logs/
+  log_subpath: logs/
+
+remove_me:
+  cleanup_start: 0
+  cleanup_end: 0

@@ -1,0 +1,44 @@
+.sidenav {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  &__content {
+    background-color: var(--sys-surface-container-lowest);
+    padding: 0 0;
+  }
+
+  &__help-header {
+    padding: 0 var(--padding-l) var(--padding-l) var(--padding-l);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  &__help-icon {
+    display: flex;
+    justify-content: flex-end;
+  }
+  &__description {
+    padding: var(--padding-l);
+  }
+}
+
+.toggle-help-button {
+  cursor: pointer;
+  display: flex;
+  padding: var(--padding-s);
+  justify-content: center;
+  align-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+}
+.accordion-panel {
+  padding-top: var(--padding-l);
+}
+.sidenav__content-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}

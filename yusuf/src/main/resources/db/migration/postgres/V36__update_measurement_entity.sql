@@ -1,0 +1,1 @@
+ALTER TABLE measuremententity ADD COLUMN description VARCHAR(4096);

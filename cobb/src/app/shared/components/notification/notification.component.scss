@@ -1,0 +1,84 @@
+.notification-panel {
+  position: fixed;
+  right: 2%;
+  top: 5.5%;
+  width: 25%;
+  background-color: var(--color-background-light);
+  box-shadow: 2px 2px 2px 3px var(--color-background-dark);
+  padding: 10px;
+  z-index: 1000;
+  border-radius: 5px;
+}
+
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px;
+  margin-bottom: 0;
+  color: var(--color-text-main);
+}
+
+.notification-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
+  border-bottom: 1px solid var(--color-gray-200);
+  background-color: var(--color-background-dark);
+  border-radius: 7px;
+  margin: 15px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    padding: 15px;
+  }
+}
+
+.notification-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  color: var(--color-text-main);
+}
+
+.timestamp {
+  margin-top: 1rem;
+  color: var(--color-secondary-main);
+  margin-left: 2rem;
+}
+
+.clear-button {
+  background: none;
+  border: none;
+  color: var(--color-error-onColor);
+  cursor: pointer;
+  font-size: 1rem;
+
+  &:hover {
+    color: var(--color-error-onContainer);
+  }
+}
+
+.check-circle-icon {
+  color: var(--color-primary-main);
+  margin-right: 0.5rem;
+}
+
+.remove-icon {
+  color: var(--color-secondary-onContainer);
+  cursor: pointer;
+}
+
+.notification-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.notification-item:nth-child(-n + 3) {
+  overflow: visible;
+}
+
+.notification-item:nth-child(n + 4) {
+  overflow: hidden;
+}

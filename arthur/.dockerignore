@@ -1,0 +1,12 @@
+**/.venv
+**/.gitignore
+app/vnets_jobs
+app/vnets_jobs_preset
+app/config.yaml
+app/config_example.yaml
+docs
+logs
+tmp-measurement-results
+
+
+README.md

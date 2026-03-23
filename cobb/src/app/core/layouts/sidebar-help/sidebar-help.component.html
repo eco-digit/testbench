@@ -1,0 +1,94 @@
+<mat-drawer-container>
+  <!-- SIDE DRAWER -->
+  <mat-drawer class="sidenav__content" #drawer position="end" mode="side">
+    <div class="sidenav__content-wrapper">
+      <div class="sidenav__help-header">
+        <p class="mat-title-medium">Help</p>
+        <mat-icon (click)="toggleDrawer(drawer)">close</mat-icon>
+      </div>
+      <div class="sidenav__description">
+        <p class="mat-body-medium">
+          This section provides a quick overview of the application's
+          sustainability metrics over time. It highlights key trends and
+          insights, helping you understand the application's current
+          environmental impact.
+        </p>
+      </div>
+      <mat-divider class="divider"></mat-divider>
+      <!-- EXTENSION PANEL -->
+      <div class="accordion-panel">
+        <mat-accordion multi>
+          <mat-expansion-panel
+            (opened)="panelOpenState.set(true)"
+            (closed)="panelOpenState.set(false)"
+          >
+            <mat-expansion-panel-header>
+              <mat-panel-title class="mat-title-medium">
+                Measurement
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p class="mat-body-medium">
+              Here, you'll find detailed environmental impact data. Analyze
+              trends, identify anomalies, and understand how the application
+              behaves under different conditions. This data is essential for
+              optimizing sustainability.
+            </p>
+          </mat-expansion-panel>
+          <mat-expansion-panel
+            (opened)="panelOpenState.set(true)"
+            (closed)="panelOpenState.set(false)"
+          >
+            <mat-expansion-panel-header>
+              <mat-panel-title class="mat-title-medium">
+                Applications Variant
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p class="mat-body-medium">
+              Compare different versions of the application to identify the most
+              sustainable configuration. This section helps you understand the
+              environmental impact of each variant, guiding you towards the best
+              solution.
+            </p>
+          </mat-expansion-panel>
+          <mat-expansion-panel
+            (opened)="panelOpenState.set(true)"
+            (closed)="panelOpenState.set(false)"
+          >
+            <mat-expansion-panel-header>
+              <mat-panel-title> Infrastructure Definition </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p class="mat-body-medium">
+              Get a detailed view of the infrastructure components required for
+              the application's operation. Review configurations and resources
+              to ensure they meet sustainability standards.
+            </p>
+          </mat-expansion-panel>
+          <mat-expansion-panel
+            (opened)="panelOpenState.set(true)"
+            (closed)="panelOpenState.set(false)"
+          >
+            <mat-expansion-panel-header>
+              <mat-panel-title class="mat-title-medium">
+                Usage Scenario
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p class="mat-body-medium">
+              Get a detailed view of the infrastructure components required for
+              the application's operation. Review configurations and resources
+              to ensure they meet sustainability standards.
+            </p>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div>
+  </mat-drawer>
+
+  <!-- HELP ICON BUTTON: Show only when drawer is closed -->
+  @if (!drawer.opened) {
+    <div class="sidenav__help-icon">
+      <div class="toggle-help-button" (click)="toggleDrawer(drawer)">
+        <mat-icon>help</mat-icon>
+      </div>
+    </div>
+  }
+</mat-drawer-container>

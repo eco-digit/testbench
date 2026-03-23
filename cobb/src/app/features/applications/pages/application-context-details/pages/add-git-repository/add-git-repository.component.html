@@ -1,0 +1,87 @@
+<div class="dialog-container">
+  <div class="icon-title-container">
+    <mat-icon class="plus-icon">link</mat-icon>
+    <h2 class="mat-headline-small">Connect new Git Repository</h2>
+    <p class="mat-body-medium">
+      You can connect to a Git Repository to create a Artefact for a Measurement
+      out of it.
+    </p>
+  </div>
+  <form [formGroup]="gitForm">
+    <mat-dialog-content>
+      <div class="input-git-repo-row">
+        <mat-form-field class="custom-form-field" appearance="outline">
+          <mat-label>Git Repository Name</mat-label>
+          <input matInput formControlName="gitName" required />
+        </mat-form-field>
+      </div>
+      <!-- Repository Url Input field  -->
+      <div class="input-git-repo-row">
+        <mat-form-field
+          class="input-field custom-form-field"
+          appearance="outline"
+        >
+          <mat-label>Repository URL</mat-label>
+          <input matInput type="text" formControlName="repositoryUrl" />
+          @if (
+            gitForm.get("repositoryUrl")?.invalid &&
+            gitForm.get("repositoryUrl")?.touched
+          ) {
+            <mat-error>Repository URL is required</mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <!-- Access Type Dropdown  -->
+      <div class="input-git-repo-row">
+        <mat-form-field appearance="outline" class="custom-form-field">
+          <mat-label>Access Type</mat-label>
+          <mat-select formControlName="accessType">
+            @for (option of accessOptions; track option) {
+              <mat-option [value]="option.label">
+                {{ option.value }}
+              </mat-option>
+            }
+          </mat-select>
+          @if (
+            gitForm.get("accessType")?.invalid &&
+            gitForm.get("accessType")?.touched
+          ) {
+            <mat-error>Access Type selection is required</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <!-- Access Token Input field  -->
+      @if (gitForm.get("accessType")?.value === "REPOSITORY_ACCESS_TOKEN") {
+        <div class="input-git-repo-row">
+          <mat-form-field
+            class="input-field custom-form-field"
+            appearance="outline"
+          >
+            <mat-label>Access Token</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="accessToken"
+              autocomplete="off"
+              required
+            />
+
+            @if (
+              gitForm.get("accessToken")?.invalid &&
+              gitForm.get("accessToken")?.touched
+            ) {
+              <mat-error> Username is required. </mat-error>
+            }
+          </mat-form-field>
+        </div>
+      }
+    </mat-dialog-content>
+    <mat-dialog-actions class="button-container">
+      <button mat-button mat-dialog-close class="cancel-button">Cancel</button>
+      <button mat-flat-button (click)="onSubmit()" [disabled]="!isFormValid()">
+        <mat-icon>check</mat-icon>Create Application
+      </button>
+    </mat-dialog-actions>
+  </form>
+</div>

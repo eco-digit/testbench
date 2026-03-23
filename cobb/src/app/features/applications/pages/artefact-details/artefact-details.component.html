@@ -1,0 +1,39 @@
+<div class="artefact-detail__container">
+  <div class="artefact-detail__top-container">
+    <div class="artefact-detail__header">
+      <h5 class="mat-headline-medium">{{ fileName }}</h5>
+
+      <button
+        mat-mini-fab
+        [matMenuTriggerFor]="menu"
+        #menuTrigger="matMenuTrigger"
+        aria-label="An icon-button with a menu"
+        class="more-menu"
+        [class.active]="menuTrigger.menuOpen"
+      >
+        <mat-icon>more_vert</mat-icon>
+      </button>
+
+      <mat-menu #menu="matMenu" xPosition="before">
+        <button mat-menu-item>
+          <mat-icon>delete</mat-icon>
+          <span>Delete artefact</span>
+        </button>
+      </mat-menu>
+    </div>
+    <p class="mat-body-medium">All Measurements of the Artefact</p>
+  </div>
+
+  <mat-tab-group (selectedTabChange)="onTabChange($event)">
+    <mat-tab
+      label="Measurements"
+      class="measurement-tab"
+      [label]="'Measurements (' + (measurementCount ?? 0) + ')'"
+    >
+      <app-all-artefact-measurements-table
+        #measurementsArtefactTable
+        (measurementsCountChange)="measurementCount = $event"
+      ></app-all-artefact-measurements-table>
+    </mat-tab>
+  </mat-tab-group>
+</div>

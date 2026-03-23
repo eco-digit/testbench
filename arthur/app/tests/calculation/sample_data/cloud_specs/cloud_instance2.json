@@ -1,0 +1,19 @@
+{
+  "id": "cloud_instance2",
+  "region": "eu-central-1",
+  "instance_type": "m5.large",
+  "image_id": "ami-abcdef1234567890",
+  "auto_scaling": false,
+  "cpu_credits": null,
+  "storage": {
+    "type": "gp3",
+    "size": 100
+  },
+  "network_interface": "subnet-654321",
+  "security_groups": ["default", "database-access"],
+  "iam_role": "db-access-role",
+  "tags": {
+    "env": "staging",
+    "project": "database-backend"
+  }
+}

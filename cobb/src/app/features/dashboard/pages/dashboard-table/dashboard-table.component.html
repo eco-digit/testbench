@@ -1,0 +1,32 @@
+<table
+  mat-table
+  [dataSource]="dataSource"
+  class="mat-elevation-z8"
+  aria-label="table of all applications shown in the dashboard"
+>
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Application</th>
+    <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="lastMeasurementScore">
+    <th mat-header-cell *matHeaderCellDef>Eco:Digit Score</th>
+    <td mat-cell *matCellDef="let element">
+      {{
+        element.lastMeasurementScore != null
+          ? (element.lastMeasurementScore | scoreFormatterPipe)
+          : "-"
+      }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let element" class="actions__container">
+      <button mat-button (click)="showDetails(element)">Show details</button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>

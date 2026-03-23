@@ -1,0 +1,15 @@
+{
+  "name": "example_appium_test",
+  "version": "0.0.1",
+  "description": "",
+  "license": "UNLICENSED",
+  "author": "",
+  "main": "test.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-and-run": "docker build -t eco_digit_appiumtest:latest . && docker run --rm --env APPIUM_HOST=host.docker.internal --add-host=host.docker.internal:host-gateway eco_digit_appiumtest:latest"
+  },
+  "dependencies": {
+    "webdriverio": "^9.15.0"
+  }
+}

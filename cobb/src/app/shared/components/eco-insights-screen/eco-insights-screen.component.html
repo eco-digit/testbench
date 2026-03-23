@@ -1,0 +1,128 @@
+@if (!atLeastOneMeasurementIsCompleted) {
+  <div class="eco-insights-details__container-not-available">
+    <mat-icon>exclamation</mat-icon>
+    <p class="mat-title-medium">No Eco:Insights available yet!</p>
+    <p class="mat-body-medium">
+      Start a measurement to see insights and analytics here.<br />
+      Once a measurement is completed, your Eco:Insights will be displayed.
+    </p>
+  </div>
+} @else {
+  <div class="eco-insights-details__container">
+    <p class="mat-title-small">Environmental impact categories:</p>
+
+    <mat-chip-set class="mat-basic">
+      @for (category of categories; track category.key) {
+        <mat-chip-option
+          [selected]="selectedCategory === category.label"
+          (click)="updateCategoryValues(category.key, category.label)"
+        >
+          {{ category.label }}
+        </mat-chip-option>
+      }
+    </mat-chip-set>
+
+    <div class="bar-chart card-container">
+      @if (active) {
+        <app-variable-bar-chart
+          class="bar-chart-app"
+          [categoryData]="categoryValues"
+          [selectedCategoryUnit]="selectedCategoryData()?.unit"
+          [selectedCategory]="selectedCategory"
+          [allLastMeasurements]="allLastMeasurements"
+          (selectedBarIndex)="getIndex($event)"
+        >
+        </app-variable-bar-chart>
+      }
+    </div>
+
+    @if (selectedIndexFromBarChart !== null) {
+      <div class="eco-insights-details__info">
+        <div class="application-info card-container">
+          <div class="application-info__box">
+            <div class="application-info__general">
+              <p class="mat-title-medium">
+                {{
+                  normalizedMeasurements[selectedIndexFromBarChart]
+                    .lastMeasurement.name
+                }}
+              </p>
+
+              <div class="time-info">
+                <mat-icon>calendar_today</mat-icon>
+                <p class="mat-body-medium">
+                  {{
+                    normalizedMeasurements[selectedIndexFromBarChart]
+                      .lastMeasurement.lastUpdated | date: "dd.MM.yyyy"
+                  }}
+                </p>
+              </div>
+
+              <div class="time-info">
+                <mat-icon>schedule</mat-icon>
+                <p class="mat-body-medium">
+                  {{
+                    normalizedMeasurements[selectedIndexFromBarChart]
+                      .lastMeasurement.simulationDuration | duration
+                  }}
+                </p>
+              </div>
+            </div>
+
+            <div class="application-info__description">
+              <p class="mat-body-medium">
+                {{
+                  normalizedMeasurements[selectedIndexFromBarChart].description
+                }}
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <button
+              mat-button
+              [routerLink]="[
+                '/applications',
+                applicationId,
+                'context',
+                normalizedMeasurements[selectedIndexFromBarChart].contextId,
+              ]"
+            >
+              Show details
+            </button>
+          </div>
+        </div>
+
+        <div class="metric-info card-container">
+          <div
+            class="metric-info__box"
+            [ngStyle]="{
+              'background-image': 'url(' + selectedCategoryData()?.image + ')',
+            }"
+          >
+            <div class="metric-info__box-title">
+              <p class="mat-title-medium">{{ selectedCategory }}</p>
+              <p class="mat-body-small">
+                in {{ selectedCategoryData()?.unit }}
+              </p>
+            </div>
+
+            <div>
+              <p class="mat-display-medium">
+                {{
+                  selectedCategoryValue !== null
+                    ? (selectedCategoryValue | scientificFormat)
+                    : "-"
+                }}
+              </p>
+            </div>
+
+            <div>
+              <p class="mat-label-small">From selected measurement</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+}

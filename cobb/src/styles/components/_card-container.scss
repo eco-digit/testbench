@@ -1,0 +1,15 @@
+.card-container {
+  background-color: var(--sys-surface-container);
+  border-radius: 0.5rem;
+  padding: var(--margin-m);
+}
+
+.bar-chart {
+  display: flex;
+  width: 100%;
+}
+
+.bar-chart-app {
+  width: 100%;
+  flex-grow: 1;
+}

@@ -1,0 +1,21 @@
+@use "@angular/material" as mat;
+
+:root {
+  .success {
+    @include mat.snack-bar-overrides(
+      (
+        container-color: var(--sys-inverse-primary),
+        supporting-text-color: var(--sys-primary-99),
+      )
+    );
+  }
+
+  .error {
+    @include mat.snack-bar-overrides(
+      (
+        container-color: var(--sys-on-error-container),
+        supporting-text-color: var(--sys-error-25),
+      )
+    );
+  }
+}

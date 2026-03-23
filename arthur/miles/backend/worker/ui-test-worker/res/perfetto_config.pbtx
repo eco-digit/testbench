@@ -1,0 +1,148 @@
+buffers {
+  size_kb: 4096
+}
+buffers {
+  size_kb: 256
+}
+buffers {
+  size_kb: 4096
+}
+data_sources {
+  config {
+    name: "linux.process_stats"
+    target_buffer: 1
+    process_stats_config {
+      scan_all_processes_on_start: true
+      record_thread_names: true
+    }
+  }
+}
+data_sources {
+  config {
+    name: "linux.process_stats"
+    target_buffer: 0
+    process_stats_config {
+      quirks: DISABLE_ON_DEMAND
+      proc_stats_poll_ms: 1000
+    }
+  }
+}
+data_sources {
+  config {
+    name: "android.surfaceflinger.frame"
+  }
+}
+data_sources {
+  config {
+    name: "android.surfaceflinger.frametimeline"
+  }
+}
+buffers {
+  size_kb: 4096
+}
+buffers {
+  size_kb: 256
+}
+buffers {
+  size_kb: 4096
+}
+data_sources {
+  config {
+    name: "android.power"
+    target_buffer: 2
+    android_power_config {
+      battery_poll_ms: 250
+      collect_power_rails: true
+    }
+  }
+}
+statsd_metadata {
+}
+data_sources {
+  config {
+    name: "linux.process_stats"
+  }
+}
+data_sources {
+  config {
+    name: "linux.sys_stats"
+    sys_stats_config {
+      cpufreq_period_ms: 500
+    }
+  }
+}
+data_sources {
+  config {
+    name: "gpu.counters"
+    gpu_counter_config {
+      counter_period_ns: 100000000
+    }
+  }
+}
+data_sources {
+  config {
+    name: "gpu.metrics"
+    gpu_counter_config {
+      counter_period_ns: 1000000000
+    }
+  }
+}
+data_sources {
+  config {
+    name: "linux.ftrace"
+    target_buffer: 0
+    ftrace_config {
+      ftrace_events: "thermal/thermal_temperature"
+      ftrace_events: "fence/signaled"
+      ftrace_events: "fence/fence_wait_start"
+      ftrace_events: "power/cpu_frequency"
+      ftrace_events: "power/cpu_idle"
+      ftrace_events: "power/gpu_work_period"
+      ftrace_events: "power/gpu_frequency"
+      ftrace_events: "kgsl/gpu_frequency"
+      ftrace_events: "mali/gpu_power_state"
+      atrace_categories: "gfx"
+      atrace_categories: "input"
+      atrace_categories: "view"
+      atrace_categories: "wm"
+      atrace_categories: "am"
+      atrace_categories: "sm"
+      atrace_categories: "camera"
+      atrace_categories: "hal"
+      atrace_categories: "res"
+      atrace_categories: "pm"
+      atrace_categories: "ss"
+      atrace_categories: "power"
+      atrace_categories: "database"
+      atrace_categories: "dalvik"
+      atrace_categories: "audio"
+      atrace_categories: "binder_driver"
+      atrace_categories: "binder_lock"
+      atrace_categories: "sched"
+      atrace_categories: "freq"
+      atrace_apps: "*"
+      drain_period_ms: 170
+      compact_sched {
+        enabled: true
+      }
+    }
+  }
+}
+data_sources {
+  config {
+    name: "linux.system_info"
+  }
+}
+
+data_sources {
+  config {
+    name: "track_event"
+  }
+}
+duration_ms: 21600000
+enable_extra_guardrails: false
+write_into_file: true
+file_write_period_ms: 100
+flush_period_ms: 1000
+statsd_logging: STATSD_LOGGING_DISABLED
+compression_type: COMPRESSION_TYPE_DEFLATE

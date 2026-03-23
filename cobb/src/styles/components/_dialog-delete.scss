@@ -1,0 +1,23 @@
+@use "@angular/material" as mat;
+
+body {
+  --mat-autocomplete-background-color: var(--sys-surface-container-high);
+  --mat-select-panel-background-color: var(--sys-surface-container-high);
+
+  ::-webkit-scrollbar {
+    overflow-y: scroll;
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--sys-surface-variant);
+    border-radius: 1rem; // 16px
+  }
+}
+
+.dialog-delete-container {
+  border-radius: 1rem;
+  --mat-dialog-container-max-width: 25rem;
+  --mat-dialog-container-min-width: 25rem;
+  background-color: var(--sys-surface-container-high);
+}

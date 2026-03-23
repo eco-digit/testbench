@@ -1,0 +1,11 @@
+:root {
+  --mat-sidenav-container-shape: 0px;
+  --mat-expansion-header-text-color: var(--sys-on-surface-variant);
+  --mat-expansion-container-text-color: var(--sys-on-surface-variant);
+  --mat-sidenav-container-width: 18.375rem;
+  .mat-drawer-container {
+    overflow: unset;
+    background-color: var(--sys-background);
+    height: 100%;
+  }
+}

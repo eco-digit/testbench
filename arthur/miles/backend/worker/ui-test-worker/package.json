@@ -1,0 +1,31 @@
+{
+  "name": "eco_digit_mobile_backend_worker",
+  "version": "0.0.1",
+  "description": "",
+  "license": "UNLICENSED",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "serve": "tsc-watch --onSuccess \"node ./dist/index.js\""
+  },
+  "dependencies": {
+    "appium-adb": "12.13.0",
+    "bullmq": "5.53.2",
+    "dockerode": "4.0.7",
+    "dotenv": "17.0.0",
+    "javascript-state-machine": "3.1.0",
+    "mustache": "4.2.0",
+    "promise.retry": "^2.1.0",
+    "promise.timeout": "1.2.0",
+    "tar-fs": "^3.1.1"
+  },
+  "devDependencies": {
+    "@types/dockerode": "3.3.41",
+    "@types/tar-fs": "^2.0.4",
+    "ts-node": "10.9.2",
+    "tsc-watch": "7.1.1",
+    "typescript": "5.8.3"
+  }
+}

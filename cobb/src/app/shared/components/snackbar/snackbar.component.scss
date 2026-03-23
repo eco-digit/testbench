@@ -1,0 +1,27 @@
+.snackbar {
+  &__container {
+    display: flex;
+  }
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  &__message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+
+    &-text {
+      white-space: nowrap;
+      text-align: center;
+    }
+  }
+
+  &__button-close {
+    cursor: pointer;
+  }
+}

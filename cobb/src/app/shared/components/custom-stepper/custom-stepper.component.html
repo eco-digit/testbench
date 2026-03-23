@@ -1,0 +1,40 @@
+<div class="stepper">
+  <div class="step" *ngFor="let step of steps; let i = index">
+    <div class="step-content">
+      <div
+        class="circle"
+        [ngClass]="{
+          completed: isCompleted(i),
+          current: isCurrent(i),
+          upcoming: !isCompleted(i) && !isCurrent(i),
+          error: isCurrent(i) && isFailure(),
+          abort: isCurrent(i) && isAbort(),
+        }"
+      >
+        @if (isCompleted(i)) {
+          <mat-icon>check</mat-icon>
+        } @else if (isCurrent(i) && (isFailure() || isAbort())) {
+          <mat-icon [ngClass]="{ error: isFailure(), abort: isAbort() }">
+            release_alert</mat-icon
+          >
+        }
+        @if (!isCompleted(i) && !isFailure() && !isAbort()) {
+          <span>{{ i + 1 }}</span>
+        }
+      </div>
+
+      <p
+        class="label"
+        [class.active-label]="isCompleted(i)"
+        [class.current-label]="isCurrent(i)"
+        [class.error-label]="isCurrent(i) && isFailure()"
+        [class.abort-label]="isCurrent(i) && isAbort()"
+      >
+        {{ step.toLowerCase() }}
+      </p>
+    </div>
+    @if (i < steps.length - 1) {
+      <div class="line" [ngClass]="{ completed: isCompleted(i) }"></div>
+    }
+  </div>
+</div>

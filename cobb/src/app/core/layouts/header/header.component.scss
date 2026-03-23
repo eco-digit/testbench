@@ -1,0 +1,30 @@
+@use "../../../../styles/helpers/variables" as v;
+
+header {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--sys-surface-container-lowest);
+  height: 4.5rem;
+}
+
+.logo-section {
+  margin-left: var(--margin-xl);
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.logo {
+  width: 11.3125rem;
+  height: 1.75rem;
+  cursor: pointer;
+}
+
+.icon-buttons {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 0;
+  padding: 0;
+}

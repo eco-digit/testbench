@@ -1,0 +1,33 @@
+import enum
+
+from sqlalchemy import (
+    Enum,
+)
+
+
+class StateEnum(enum.Enum):
+    QUEUED = "QUEUED"
+    STARTED = "STARTED"
+    PREPARE = "PREPARE"
+    INSTALL = "INSTALL"
+    WORK = "WORK"
+    COLLECT = "COLLECT"
+    CLEANUP = "CLEANUP"
+    ABORTED = "ABORTED"
+    FAILED = "FAILED"
+    FAILED_SUT = "FAILED_SUT"
+    FAILED_ARTHUR = "FAILED_ARTHUR"
+    COMPLETED = "COMPLETED"
+
+
+class ErrorCode(Enum):
+    APPLICATION_VARIANT_NOT_FOUND = "APPLICATION_VARIANT_NOT_FOUND"
+    SUT = "SUT"
+    ARTHUR = "ARTHUR"
+    NONE = "NONE"
+
+
+class AccessType(Enum):
+    REPOSITORY_ACCESS_TOKEN = "REPOSITORY_ACCESS_TOKEN"
+    PUBLIC_REPOSITORY = "PUBLIC_REPOSITORY"
+    MANUAL_UPLOAD = "MANUAL_UPLOAD"

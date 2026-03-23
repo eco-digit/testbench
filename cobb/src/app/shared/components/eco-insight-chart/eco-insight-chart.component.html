@@ -1,0 +1,32 @@
+<div class="chart__container">
+  <div class="chart__box">
+    <div class="chart__box-title">
+      <p class="mat-title-medium">Ecodigit:Score</p>
+      <p class="mat-body-small">Trend over time</p>
+    </div>
+    <div class="chart__box-select-menu">
+      <mat-form-field appearance="outline">
+        <mat-label>Select up to 5 items</mat-label>
+        <mat-select [formControl]="applications" multiple>
+          @for (application of applicationList; track application) {
+            <mat-option [value]="application">{{ application }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="chart__canvas">
+    <canvas #chartCanvas></canvas>
+  </div>
+  <div class="chart__legend">
+    @for (item of legendItems; track $index) {
+      <div class="chart__legend-item">
+        <div
+          class="chart__legend-ellipse"
+          [ngStyle]="{ 'background-color': item.color }"
+        ></div>
+        <p class="mat-label-small">{{ item.label }}</p>
+      </div>
+    }
+  </div>
+</div>

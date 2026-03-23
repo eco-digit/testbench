@@ -1,0 +1,45 @@
+{
+  "app": {
+    "nav": {
+      "refresh": "Aktualisieren",
+      "new": "+"
+    },
+    "panels": {
+      "title": {
+        "queue": "Queue Infos",
+        "jobs": {
+          "status":   "Status-Update-Jobs",
+          "ui-tests": "UI-Testjobs",
+          "analyzer": "Perfetto-Trace Analyzer jobs"
+        },
+        "redis": "Redis Infos"
+      },
+      "devices": {
+        "title": "Geräte/Emulatoren",
+        "empty": "Keine Geräte oder Emulatoren erreichbar"
+      }
+    },
+    "modals": {
+      "new-job": {
+        "title": "Neue Messung durchführen",
+        "body": {
+          "fields": {
+            "title": {
+              "name": "Name",
+              "device": "Gerät",
+              "measurement-data-tar": "Tar-Datei der Messung",
+              "environmental-variables": "Umgebungsvariablen"
+            },
+            "device": {
+              "empty": "Kein Gerät vorhanden"
+            }
+          }
+        },
+        "buttons": {
+          "cancel": "Abbrechen",
+          "save": "Speichern"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,246 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "eco_digit_inf_definition": {
+      "type": "object",
+      "patternProperties": {
+        "^server[0-9]+$": {
+          "type": "object",
+          "properties": {
+            "unique_identifier": {
+              "type": "string"
+            },
+            "node_type": {
+              "type": "string",
+              "enum": [
+                "server",
+                "edge",
+                "cloud",
+                "mobile"
+              ]
+            },
+            "device": {
+              "type": "object",
+              "properties": {
+                "model": {
+                  "type": "string"
+                },
+                "os": {
+                  "type": "string"
+                },
+                "deps": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "lifetime": {
+                  "type": "integer"
+                }
+              },
+              "required": []
+            },
+            "refurbishment": {
+              "type": "object",
+              "properties": {
+                "is_refurbished": {
+                  "type": "boolean"
+                },
+                "gets_refurbished": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "is_refurbished",
+                "gets_refurbished"
+              ]
+            },
+            "performance": {
+              "type": "object",
+              "properties": {
+                "cpu_cores": {
+                  "type": "integer"
+                },
+                "cpu_type": {
+                  "type": "string"
+                },
+                "gpu": {
+                  "type": "integer"
+                },
+                "ram": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "cpu_cores",
+                "ram"
+              ]
+            },
+            "disk": {
+              "type": "object",
+              "properties": {
+                "disk_capacity": {
+                  "type": "integer"
+                },
+                "disk_type": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "disk_capacity"
+              ]
+            },
+            "network": {
+              "type": "object",
+              "properties": {
+                "network_type": {
+                  "type": "string"
+                },
+                "network_throughput": {
+                  "type": "integer"
+                }
+              },
+              "required": []
+            },
+            "location": {
+              "type": "object",
+              "properties": {
+                "loc_lat": {
+                  "type": "string"
+                },
+                "loc_lon": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "loc_lat",
+                "loc_lon"
+              ]
+            }
+          },
+          "required": [
+            "unique_identifier",
+            "node_type",
+            "device",
+            "performance",
+            "disk",
+            "network",
+            "location"
+          ],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "node_type": {
+                    "enum": [
+                      "server",
+                      "edge",
+                      "mobile"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "device": {
+                    "required": [
+                      "os"
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "node_type": {
+                    "enum": [
+                      "edge",
+                      "mobile"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "network": {
+                    "required": [
+                      "network_type"
+                    ]
+                  }
+                }
+              }
+            }
+          ],
+          "additionalProperties": false
+        },
+          "^clients[0-9]+$": {
+          "type": "object",
+          "properties": {
+            "amount": { "type": "integer" },
+            "unique_identifier": { "type": "string" },
+            "node_type": { "type": "string", "enum": ["laptop", "desktop"] },
+            "device": {
+              "type": "object",
+              "properties": {
+                "model": { "type": "string" },
+                "os": { "type": "string" },
+                "deps": { "type": "array", "items": { "type": "string" } },
+                "lifetime": { "type": "integer" }
+              },
+              "required": ["model", "os", "deps", "lifetime"]
+            },
+            "refurbishment": {
+              "type": "object",
+              "properties": {
+                "is_refurbished": { "type": "boolean" },
+                "gets_refurbished": { "type": "boolean" }
+              },
+              "required": ["is_refurbished", "gets_refurbished"]
+            },
+            "performance": {
+              "type": "object",
+              "properties": {
+                "cpu_cores": { "type": "integer" },
+                "cpu_type": { "type": "string" },
+                "gpu": { "type": "integer" },
+                "ram": { "type": "integer" }
+              },
+              "required": ["cpu_cores", "cpu_type", "gpu", "ram"]
+            },
+            "disk": {
+              "type": "object",
+              "properties": {
+                "disk_capacity": { "type": "integer" },
+                "disk_type": { "type": "string" }
+              },
+              "required": ["disk_capacity", "disk_type"]
+            },
+            "network": {
+              "type": "object",
+              "properties": {
+                "network_type": { "type": "string" },
+                "network_throughput": { "type": "integer" }
+              },
+              "required": ["network_type", "network_throughput"]
+            },
+            "location": {
+              "type": "object",
+              "properties": {
+                "loc_lat": { "type": "string" },
+                "loc_lon": { "type": "string" }
+              },
+              "required": ["loc_lat", "loc_lon"]
+            }
+          },
+          "required": ["amount", "unique_identifier", "node_type", "device", "refurbishment", "performance", "disk", "network", "location"],
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": ["eco_digit_inf_definition"],
+  "additionalProperties": false
+}

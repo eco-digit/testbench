@@ -1,0 +1,42 @@
+<div class="result__container">
+  <div class="result__container-title">
+    <p class="mat-title-medium">Measurement Results</p>
+    <button mat-button>
+      <mat-icon>download</mat-icon>
+      export logs as .txt
+    </button>
+  </div>
+
+  <div class="bar-chart card-container">
+    <app-result-chart
+      (interaction)="onChartInteraction($event)"
+      class="bar-chart-app"
+    ></app-result-chart>
+  </div>
+
+  <div class="eco-insights__environmentNumbers">
+    @for (metric of displayedMetrics; track $index) {
+      <div
+        class="card-container box"
+        [ngStyle]="{ 'background-image': 'url(' + metric.image + ')' }"
+      >
+        <div class="dashboard__eco-insight-metrics-box-2">
+          <p class="mat-title-medium">{{ metric.title }}</p>
+          <p class="mat-body-small">{{ metric.unit }}</p>
+          <p class="mat-display-medium">
+            {{ metric.value | scientificFormat }}
+          </p>
+        </div>
+        @if (isClicked === "cumulative") {
+          <p class="mat-label-small">
+            Cumulative up to phase {{ clickedPhase }}
+          </p>
+        } @else if (isClicked === "perPhase") {
+          <p class="mat-label-small">in phase {{ clickedPhase }}</p>
+        } @else {
+          <p class="mat-label-small">In total over the entire measurement</p>
+        }
+      </div>
+    }
+  </div>
+</div>

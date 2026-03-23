@@ -1,0 +1,39 @@
+<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
+<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
+
+<div (click)="$event.stopPropagation()" class="dialog-container">
+  <div class="icon-title-container">
+    <mat-icon class="plus-icon">add</mat-icon>
+    <h2 class="mat-headline-small">Create New Application</h2>
+    <p class="mat-body-medium">
+      Name and describe your application to measure its environmental impact.
+    </p>
+  </div>
+  <form [formGroup]="applicationForm">
+    <mat-dialog-content>
+      <div class="input-application-row">
+        <mat-form-field class="custom-form-field" appearance="outline">
+          <mat-label>Application name</mat-label>
+          <input matInput formControlName="appName" required />
+          @if (applicationForm.get("appName")?.hasError("required")) {
+            <mat-error>Application name is required</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <mat-form-field
+        class="input-field custom-form-field"
+        appearance="outline"
+      >
+        <mat-label>Application description</mat-label>
+        <input matInput type="text" formControlName="description" />
+      </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions class="button-container">
+      <button mat-button mat-dialog-close class="cancel-button">Cancel</button>
+      <button mat-flat-button (click)="onSubmit()" [disabled]="!isFormValid()">
+        <mat-icon>check</mat-icon>Create Application
+      </button>
+    </mat-dialog-actions>
+  </form>
+</div>

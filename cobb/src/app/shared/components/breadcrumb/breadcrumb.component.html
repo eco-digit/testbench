@@ -1,0 +1,16 @@
+<div class="breadcrumb__container">
+  @if (breadcrumbs.length > 0) {
+    @for (bc of breadcrumbs; track bc; let last = $last) {
+      <button
+        mat-button
+        [routerLink]="bc.link"
+        [ngClass]="{ 'breadcrumb-link': true, 'disabled-link': last }"
+      >
+        {{ bc.label }}
+      </button>
+      @if (!last) {
+        <mat-icon class="breadcrumb-icon">chevron_right</mat-icon>
+      }
+    }
+  }
+</div>

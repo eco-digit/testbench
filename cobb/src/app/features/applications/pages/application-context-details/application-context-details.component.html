@@ -1,0 +1,84 @@
+<div class="context-detail__container">
+  <div class="context-detail__top-container">
+    <div class="context-detail__header">
+      <h5 class="mat-headline-medium">{{ contextName }}</h5>
+
+      <button
+        mat-mini-fab
+        [matMenuTriggerFor]="menu"
+        #menuTrigger="matMenuTrigger"
+        aria-label="An icon-button with a menu"
+        class="more-menu"
+        [class.active]="menuTrigger.menuOpen"
+      >
+        <mat-icon>more_vert</mat-icon>
+      </button>
+
+      <mat-menu #menu="matMenu" xPosition="before">
+        <button mat-menu-item (click)="editContextDialog()">
+          <mat-icon>edit</mat-icon>
+          <span>Edit Context</span>
+        </button>
+        <button mat-menu-item (click)="uploadArtefact()">
+          <mat-icon>upload</mat-icon>
+          <span>Upload Artefact</span>
+        </button>
+        <button mat-menu-item (click)="openConnectGitRepoDialog()">
+          <mat-icon>link</mat-icon>
+          <span>Connect Git Repository</span>
+        </button>
+        <button mat-menu-item (click)="openDeleteContextDialog()">
+          <mat-icon>delete</mat-icon>
+          <span>Delete Context</span>
+        </button>
+      </mat-menu>
+    </div>
+    <p class="mat-body-medium">{{ description }}</p>
+  </div>
+
+  <mat-tab-group (selectedTabChange)="onTabChange($event)">
+    <mat-tab label="Eco Insights Contexts" class="insights-tab">
+      <ng-template mat-tab-label>
+        <span class="tab-label">Eco:Insights</span>
+      </ng-template>
+      <app-eco-insights-screen
+        [active]="selectedTabIndex === 0"
+        [applicationId]="applicationId"
+        [normalizedMeasurements]="normalizedMeasurements"
+        [atLeastOneMeasurementIsCompleted]="atLeastOneMeasurementIsCompleted"
+      >
+        ></app-eco-insights-screen
+      >
+    </mat-tab>
+    <mat-tab
+      label="Artefacts"
+      class="artefact-tab"
+      [label]="'Artefacts (' + (artefactCount ?? 0) + ')'"
+    >
+      <app-all-artifacts-table
+        #artefactTable
+        (artefactsCountChange)="artefactCount = $event"
+      ></app-all-artifacts-table>
+    </mat-tab>
+    <mat-tab
+      label="Git-Repositories"
+      class="git-repo-tab"
+      [label]="'Git_Repositories (' + (gitRepoCount ?? 0) + ')'"
+    >
+      <app-git-repos-table
+        #gitTable
+        (gitReposCountChange)="gitRepoCount = $event"
+      ></app-git-repos-table>
+    </mat-tab>
+    <mat-tab
+      label="Measurements"
+      class="measurement-tab"
+      [label]="'Measurements (' + (measurementCount ?? 0) + ')'"
+    >
+      <app-all-measurements
+        #measurementContextTable
+        (measurementsCountChange)="measurementCount = $event"
+      ></app-all-measurements
+    ></mat-tab>
+  </mat-tab-group>
+</div>

@@ -1,0 +1,52 @@
+app:
+  port: 5000 # change for local installations
+  host: 0.0.0.0 # 0.0.0.0 means any
+  measurement_timeout: 10800 # in seconds, defaults to 3 hours
+  #measurement_prefix: measurement-
+  #application_variant_prefix: applicationvariant-
+
+hosting:
+  gm_username: arthur
+  gm_password: arthur
+  host_paths:
+    base: /var/lib/ecodigit/docker_shares
+    tmp_measurement_subpath: tmp-measurement-results
+    tmp: /tmp/
+    libvirt_images: /var/lib/libvirt/images
+  guest_paths:
+    shared_mount: /home/arthur/shared_mount
+
+services:
+  minio:
+    host: 127.0.0.1
+    port: 9000
+    user: minioadmin
+    password: minioadmin
+    application_variants_bucket: applicationvariants
+
+  timescale:
+    host: 127.0.0.1
+    port: 5433
+    user: timescale_user
+    password: timescale_password
+    database: timescale_database
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    user: rabbitmq
+    password: rabbitmqpassword
+
+  miles:
+    host: 127.0.0.1
+    port: 8082
+    is_stub: False
+
+# Logging
+logging:
+  log_level: DEBUG
+  log_path: /arthur/logs/
+  log_subpath: logs/
+
+remove_me:
+  cleanup_start: 0
+  cleanup_end: 0

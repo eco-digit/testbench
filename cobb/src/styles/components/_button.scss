@@ -1,0 +1,38 @@
+@use "@angular/material" as mat;
+
+body {
+  --mat-fab-small-foreground-color: var(--sys-on-primary);
+  --mdc-fab-small-container-color: var(--sys-primary);
+  --mdc-fab-small-container-shape: 6.25rem;
+  --mdc-fab-container-color: var(--sys-primary);
+  --mat-fab-foreground-color: var(--sys-on-primary);
+  --mdc-protected-button-container-color: var(--sys-surface-container-low);
+}
+
+.more-menu,
+.result__more-menu {
+  --mdc-fab-small-container-color: var(--sys-on-secondary-fixed-variant);
+  --mat-fab-small-foreground-color: var(--sys-on-secondary-container);
+}
+
+.mat-mdc-menu-trigger.active {
+  --mdc-fab-small-container-color: var(--sys-primary);
+  --mat-fab-small-foreground-color: var(--sys-on-primary);
+}
+
+.floating-button {
+  position: fixed;
+  bottom: 3rem;
+  right: 4.125rem;
+  z-index: 1000;
+  transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.floating-button.sidebar-open {
+  right: 24rem;
+}
+
+.raised-button-apply {
+  --mdc-protected-button-container-color: var(--sys-primary);
+  --mdc-protected-button-label-text-color: var(--sys-on-primary);
+}

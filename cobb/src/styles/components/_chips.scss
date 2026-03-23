@@ -1,0 +1,79 @@
+@use "@angular/material" as mat;
+
+:root {
+  @include mat.chips-overrides(
+    (
+      disabled-outline-color: transparent,
+      hover-state-layer-color: transparent,
+      selected-hover-state-layer-color: transparent,
+      focus-state-layer-color: transparent,
+    )
+  );
+}
+
+.mat-basic .mdc-evolution-chip__action {
+  border: 1px solid var(--sys-outline-variant);
+  border-radius: 0.5rem;
+}
+
+.status-created,
+.status-triggered,
+.status-configured,
+.status-running {
+  --mdc-chip-elevated-container-color: var(--sys-tertiary-container);
+  --mdc-chip-label-text-color: var(--sys-on-tertiary-container);
+
+  --mdc-chip-with-icon-icon-color: var(--sys-on-tertiary-container);
+}
+.status-completed {
+  --mdc-chip-elevated-container-color: var(--sys-primary-container);
+  --mdc-chip-label-text-color: var(--sys-primary);
+
+  --mdc-chip-with-icon-icon-color: var(--sys-primary);
+}
+.status-failed {
+  --mdc-chip-elevated-container-color: var(--sys-error-container);
+  --mdc-chip-label-text-color: var(--sys-error);
+  mat-icon {
+    --mdc-chip-with-icon-icon-color: var(--sys-error);
+  }
+}
+.status-aborted {
+  --mdc-chip-elevated-container-color: var(
+    --extended-custom-color-warning-container
+  );
+  --mdc-chip-label-text-color: var(
+    --extended-custom-color-on-warning-container
+  );
+  mat-icon {
+    --mdc-chip-with-icon-icon-color: var(
+      --extended-custom-color-on-warning-container
+    );
+  }
+}
+.status-healthy {
+  --mdc-chip-label-text-color: var(--sys-primary);
+  --mdc-chip-with-icon-icon-color: var(--sys-primary);
+}
+
+.status-critical {
+  --mdc-chip-label-text-color: var(--sys-error);
+  --mdc-chip-with-icon-icon-color: var(--sys-error);
+}
+
+.status-disrupted {
+  --mdc-chip-label-text-color: var(--extended-custom-color-warning);
+  --mdc-chip-with-icon-icon-color: var(--extended-custom-color-warning);
+}
+
+.status-not-started,
+.status-disrupted,
+.status-critical,
+.status-healthy {
+  @include mat.chips-overrides(
+    (
+      hover-state-layer-color: transparent,
+      focus-state-layer-color: transparent,
+    )
+  );
+}

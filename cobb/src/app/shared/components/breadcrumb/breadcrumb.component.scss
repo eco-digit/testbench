@@ -1,0 +1,13 @@
+.breadcrumb {
+  &__container {
+    height: 2.5rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+}
+
+.disabled-link {
+  pointer-events: none;
+  opacity: 0.38;
+}

@@ -1,0 +1,17 @@
+.error {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    padding: var(--padding-xxl) var(--padding-m) var(--padding-m)
+      var(--padding-m);
+
+    &-icon {
+      font-size: 4rem;
+      width: 4rem;
+      height: 4rem;
+    }
+  }
+}

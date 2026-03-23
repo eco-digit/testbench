@@ -1,0 +1,1 @@
+ALTER TABLE applicationentity ALTER COLUMN description TYPE varchar(4096);

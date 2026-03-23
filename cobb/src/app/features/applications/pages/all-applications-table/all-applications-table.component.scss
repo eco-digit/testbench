@@ -1,0 +1,16 @@
+.all-applications-table {
+  &__container {
+    margin-top: var(--margin-l);
+  }
+
+  &__paginator {
+    margin-bottom: 3rem;
+  }
+
+  &__show-details {
+    color: var(--sys-primary);
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+  }
+}

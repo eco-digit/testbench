@@ -1,0 +1,79 @@
+<div class="all-application-context__container">
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    class="mat-elevation-z8"
+    aria-label="Application Context Table"
+  >
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="healthStatus">
+      <th mat-header-cell *matHeaderCellDef>Health status</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-chip-set>
+          <mat-chip
+            class="status-chip"
+            [matTooltip]="getStatusInfo(element.healthStatus).tooltip"
+            matTooltipPosition="above"
+            [disableRipple]="true"
+            [ngClass]="getStatusInfo(element.healthStatus).status"
+          >
+            @if (getStatusInfo(element.healthStatus).icon) {
+              <mat-icon matChipAvatar>
+                {{ getStatusInfo(element.healthStatus).icon }}
+              </mat-icon>
+            }
+            {{ getStatusInfo(element.healthStatus).label }}
+          </mat-chip>
+        </mat-chip-set>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="lastMeasurement">
+      <th mat-header-cell *matHeaderCellDef>Last measurement</th>
+      <td mat-cell *matCellDef="let element">
+        {{ getDateOfLastMeasurement(element) }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ecodigitScore">
+      <th mat-header-cell *matHeaderCellDef>ECO:Digit Score</th>
+      <td mat-cell *matCellDef="let element">
+        {{
+          element.lastMeasurement?.ecodigitScore !== null
+            ? (element.lastMeasurement.ecodigitScore | scoreFormatterPipe)
+            : "-"
+        }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="showDetails">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let row">
+        <button
+          mat-button
+          [routerLink]="[
+            '/applications/',
+            this.applicationId,
+            'context',
+            row.contextId,
+          ]"
+        >
+          Show details
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+  <mat-paginator
+    [length]="dataSource.data.length"
+    [pageSize]="5"
+    [pageSizeOptions]="[5, 10, 20, 50, 100]"
+    aria-label="Select page"
+  ></mat-paginator>
+</div>

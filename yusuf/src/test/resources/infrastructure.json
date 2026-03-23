@@ -1,0 +1,20 @@
+{
+    "eames-1-0": {
+        "deps": "['docker', 'docker-compose']",
+        "node_type": "laptop",
+        "memory": "4000000000",
+        "cpu_cores": "2",
+        "gpu": "0",
+        "disk": "35000000000",
+        "network": "1000000000"
+    },
+    "eames-1-1": {
+        "deps": "['bind9', 'dnsutils']",
+        "node_type": "server",
+        "memory": "4000000000",
+        "cpu_cores": "2",
+        "gpu": "0",
+        "disk": "35000000000",
+        "network": "1000000000"
+    }
+}

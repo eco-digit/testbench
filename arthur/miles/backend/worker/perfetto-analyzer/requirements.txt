@@ -1,0 +1,5 @@
+bullmq==2.15.0
+load_dotenv==0.1.0
+perfetto==0.13
+pandas==2.3
+autogluon==1.4

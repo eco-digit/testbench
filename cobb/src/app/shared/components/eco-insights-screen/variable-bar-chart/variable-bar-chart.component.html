@@ -1,0 +1,19 @@
+<div class="bar-chart__container">
+  <div class="chart__box-title">
+    <p class="mat-title-medium">{{ selectedCategory }}</p>
+    <p class="mat-body-small">in {{ selectedCategoryUnit }}</p>
+  </div>
+
+  <div class="bar-chart_canvas">
+    <canvas #variableBarChart></canvas>
+  </div>
+
+  <div class="chart__legend">
+    <div class="chart__legend-item">
+      <div class="chart__legend-ellipse"></div>
+      <p class="chart mat-label-small">
+        Last measurement of each application context
+      </p>
+    </div>
+  </div>
+</div>

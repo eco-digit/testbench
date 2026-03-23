@@ -1,0 +1,7 @@
+.bar-chart {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--margin-m);
+  }
+}

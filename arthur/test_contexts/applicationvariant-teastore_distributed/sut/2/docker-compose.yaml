@@ -1,0 +1,58 @@
+services:
+  persistence:
+    image: teastore-persistence-image
+    expose:
+      - "8080"
+    ports:
+      - "1111:8080"
+    environment:
+      HOST_NAME: "{{eco_digit_ip_2}}"
+      SERVICE_PORT: "1111"
+      REGISTRY_HOST: "{{eco_digit_ip_0}}"
+      REGISTRY_PORT: "10000"
+      DB_HOST: "{{eco_digit_ip_1}}"
+      DB_PORT: "3306"
+  auth:
+    image: teastore-auth-image
+    expose:
+      - "8080"
+    ports:
+      - "2222:8080"
+    environment:
+      HOST_NAME: "{{eco_digit_ip_2}}"
+      SERVICE_PORT: "2222"
+      REGISTRY_HOST: "{{eco_digit_ip_0}}"
+      REGISTRY_PORT: "10000"
+  recommender:
+    image: teastore-recommender-image
+    expose:
+      - "8080"
+    ports:
+      - "3333:8080"
+    environment:
+      HOST_NAME: "{{eco_digit_ip_2}}"
+      SERVICE_PORT: "3333"
+      REGISTRY_HOST: "{{eco_digit_ip_0}}"
+      REGISTRY_PORT: "10000"
+  image:
+    image: teastore-image
+    expose:
+      - "8080"
+    ports:
+      - "4444:8080"
+    environment:
+      HOST_NAME: "{{eco_digit_ip_2}}"
+      SERVICE_PORT: "4444"
+      REGISTRY_HOST: "{{eco_digit_ip_0}}"
+      REGISTRY_PORT: "10000"
+  webui:
+    image: teastore-webui-image
+    expose:
+      - "8080"
+    ports:
+      - "8080:8080"
+    environment:
+      HOST_NAME: "{{eco_digit_ip_2}}"
+      SERVICE_PORT: "8080"
+      REGISTRY_HOST: "{{eco_digit_ip_0}}"
+      REGISTRY_PORT: "10000"

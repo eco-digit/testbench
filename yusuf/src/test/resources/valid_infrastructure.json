@@ -1,0 +1,39 @@
+{
+  "eco_digit_inf_definition": {
+    "server1": {
+      "unique_identifier": "persistence",
+      "node_type": "server",
+      "device": {
+        "model": "HPE ProLiant DL360 Gen10",
+        "os": "Ubuntu 20.04",
+        "deps": [
+          "docker",
+          "docker-compose"
+        ],
+        "lifetime": 5
+      },
+      "refurbishment": {
+        "is_refurbished": false,
+        "gets_refurbished": true
+      },
+      "performance": {
+        "cpu_cores": 2,
+        "cpu_type": "intel",
+        "gpu": 0,
+        "ram": 4000000000
+      },
+      "disk": {
+        "disk_capacity": 35000000000,
+        "disk_type": "SSD"
+      },
+      "network": {
+        "network_type": "wifi",
+        "network_throughput": 1000000000
+      },
+      "location": {
+        "loc_lat": "48.856613",
+        "loc_lon": "2.352222"
+      }
+    }
+  }
+}

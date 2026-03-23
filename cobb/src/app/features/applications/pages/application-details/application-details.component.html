@@ -1,0 +1,83 @@
+<div class="app-detail__container">
+  <div class="app-detail__top-container">
+    <div class="app-detail__header">
+      <h5 class="mat-headline-medium">{{ applicationName }}</h5>
+      @if (this.lastMeasurementDate) {
+        <div class="app-detail__icon">
+          <mat-icon>avg_time</mat-icon>
+        </div>
+        <span class="app-detail__timestamp">{{
+          this.lastMeasurementDate | date: DATE_FORMAT
+        }}</span>
+      }
+      <button
+        mat-mini-fab
+        [matMenuTriggerFor]="menu"
+        #menuTrigger="matMenuTrigger"
+        aria-label="An icon-button with a menu"
+        class="more-menu"
+        [class.active]="menuTrigger.menuOpen"
+      >
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu" xPosition="before">
+        <button mat-menu-item (click)="createApplicationContext()">
+          <mat-icon>add</mat-icon>
+          <span>Add Application Context</span>
+        </button>
+        <button mat-menu-item (click)="editApplicationDialog()">
+          <mat-icon>edit</mat-icon>
+          <span>Edit Application</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>download</mat-icon>
+          <span>Export as CSV</span>
+        </button>
+        <button mat-menu-item (click)="deleteApplication()">
+          <mat-icon>delete</mat-icon>
+          <span>Delete Application</span>
+        </button>
+      </mat-menu>
+    </div>
+    <p class="mat-body-medium">{{ description }}</p>
+  </div>
+
+  <div class="metrics">
+    @for (metric of metrics; track $index) {
+      <div class="application-box" [ngClass]="getMetricClasses(metric.title)">
+        <div>
+          <p class="mat-title-medium">{{ metric.title }}</p>
+          <p class="mat-body-small">{{ metric.subtitle }}</p>
+        </div>
+        <p class="mat-headline-medium">{{ metric.value }}</p>
+      </div>
+    }
+  </div>
+
+  <mat-tab-group (selectedTabChange)="onTabChange($event)">
+    <mat-tab label="Eco Insights" class="insights-tab">
+      <ng-template mat-tab-label>
+        <span class="tab-label">Eco:Insights</span>
+      </ng-template>
+      <app-eco-insights-screen
+        [active]="selectedTabIndex === 0"
+        [applicationId]="applicationId"
+        [normalizedMeasurements]="normalizedMeasurements"
+        [atLeastOneMeasurementIsCompleted]="atLeastOneMeasurementIsCompleted"
+      >
+        ></app-eco-insights-screen
+      >
+    </mat-tab>
+    <mat-tab
+      label="Application Context"
+      class="context-tab"
+      [label]="'Application Context (' + (measurementCount ?? 0) + ')'"
+    >
+      <app-application-context
+        #contextTable
+        (measurementCountChange)="measurementCount = $event"
+      ></app-application-context>
+    </mat-tab>
+  </mat-tab-group>
+  <router-outlet></router-outlet>
+</div>

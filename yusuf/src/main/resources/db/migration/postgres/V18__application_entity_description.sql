@@ -1,0 +1,1 @@
+alter table public.applicationentity add description text;

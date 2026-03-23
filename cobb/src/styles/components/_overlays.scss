@@ -1,0 +1,27 @@
+.icon-title-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--padding-xxl);
+  gap: var(--padding-l);
+}
+
+.icon-title-delete-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: var(--padding-xxl);
+  gap: var(--padding-l);
+}
+
+.input-row {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: var(--padding-s);
+  padding: 0 var(--margin-xl);
+}
+
+.custom-form-field {
+  width: 100%;
+}

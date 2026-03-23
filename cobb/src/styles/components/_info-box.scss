@@ -1,0 +1,28 @@
+.application-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: var(--sys-surface-container);
+}
+
+.metrics {
+  display: flex;
+  gap: 1.5rem;
+
+  & > * {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+
+    &.critical .mat-headline-medium {
+      color: var(--sys-error);
+    }
+
+    &.disrupted .mat-headline-medium {
+      color: var(--extended-custom-color-warning);
+    }
+  }
+}

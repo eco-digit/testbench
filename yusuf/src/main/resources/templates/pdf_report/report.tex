@@ -1,0 +1,125 @@
+\documentclass[a4paper,10pt]{report}
+\usepackage[total={170mm,235mm}]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[table]{xcolor}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[hidelinks]{hyperref}
+
+\usepackage{fancyhdr}
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[L]{[[ measurementInformation.projectName ]]}
+\fancyhead[R]{\includegraphics[width=0.2\linewidth]{ecodigit_logo}}
+
+\begin{titlepage}
+\sffamily
+\vspace*{\fill}
+\begin{center}
+\begin{huge}
+CO2e Footprint of [[ measurementInformation.projectName ]]\\[4mm]
+\end{huge}
+\begin{Large}
+\today\\[4mm]
+\end{Large}
+\includegraphics[width=0.2\linewidth]{ecodigit_logo}
+\end{center}
+\vspace*{\fill}
+\end{titlepage}
+
+\tableofcontents
+
+\chapter{Introduction}
+
+This report summarizes the life cycle assessment for the project [[ measurementInformation.projectName ]].
+Chapter \ref{information_about_the_application} lists information on the the simulated hardware.
+Chapter \ref{series_of_measurements} illustrates the measurement data collected during execution for the individual devices used.
+
+\chapter{Information about the Application}
+\label{information_about_the_application}
+[[ #nodeInformation ]]
+\section{[[ uniqueIdentifier ]] - [[ type ]]}
+
+\setlength{\arrayrulewidth}{0.2mm}
+\begin{tabular}{ |l|l| }
+[[ #deviceInformation ]]
+ \hline
+ \rowcolor[HTML]{e3fcef} \multicolumn{2}{|l|}{Device information} \\
+ \hline
+ \hline
+ Model & [[ model ]] \\
+ Lifetime & [[ lifetime ]] \\
+ Usage duration & [[ usageDuration ]] \\
+ Operating system & [[ os.name ]] \\
+ Dependencies &
+  [[ #dependencyInformation.isPresent ]]
+  [[ #dependencyInformation.get ]][[ ^-first ]], [[ /-first ]][[ this ]][[ /dependencyInformation.get ]]
+  [[ /dependencyInformation.isPresent ]]
+  \\
+[[ /deviceInformation ]]
+[[ #performanceInformation ]]
+ \hline
+ \hline
+ \rowcolor[HTML]{e3fcef} \multicolumn{2}{|l|}{Device configuration} \\
+ \hline
+ \hline
+[[ #cpuInformation ]]
+ Number of processors & [[ cores ]] \\
+ Type of processor & [[ type ]] \\
+ Clock speed & [[ clockSpeed ]] \\
+[[ /cpuInformation ]]
+ GPU & [[ gpu ]] \\
+ Memory & [[ memoryCapacity ]] \\
+[[ /performanceInformation ]]
+[[ #diskInformation ]]
+ \hline
+ \hline
+ \rowcolor[HTML]{e3fcef} \multicolumn{2}{|l|}{Mass storage device} \\
+ \hline
+ \hline
+ Capacity & [[ capacity ]] \\
+ Type & [[ type ]] \\
+[[ /diskInformation ]]
+[[ #networkInformation ]]
+ \hline
+ \hline
+ \rowcolor[HTML]{e3fcef} \multicolumn{2}{|l|}{network} \\
+ \hline
+ \hline
+ Type & [[ type ]] \\
+ Throughput & [[ throughput ]] \\
+ Routes & [[ #connections ]][[ ^-first ]], [[ /-first ]][[ this.connectedHost ]][[ /connections ]] \\
+ [[ /networkInformation ]]
+ [[ #locationInformation.isPresent ]]
+ [[ #locationInformation.get ]]
+ \hline
+ \hline
+ \rowcolor[HTML]{e3fcef} \multicolumn{2}{|l|}{Device location} \\
+ \hline
+ \hline
+ Location & [[ location ]] \\
+ [[ /locationInformation.get ]]
+ [[ /locationInformation.isPresent ]]
+ \hline
+\end{tabular}
+
+[[ /nodeInformation ]]
+
+\chapter{Series of Measurements}
+\label{series_of_measurements}
+
+[[ #graphLocations.entrySet ]]
+\section{[[ key.uniqueIdentifier ]] - [[ key.type ]]}
+[[ #value ]]
+\begin{figure}[H]
+\includegraphics[width=0.95\textwidth]{./[[ second.getFileName ]]}
+\caption{[[ first ]] for [[ key.uniqueIdentifier ]]}
+\end{figure}
+[[ /value ]]
+[[ /graphLocations.entrySet ]]
+
+\end{document}

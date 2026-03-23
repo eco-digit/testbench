@@ -1,0 +1,51 @@
+*.log
+*.tmp
+*.temp
+node_modules
+.angular
+
+# arthur 
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+.vscode/
+
+# yusuf
+postgres_data/
+minio_data/
+target/
+build/
+out/
+log/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+.idea/
+*.iml
+*.iws
+*.ipr
+*.ctxt
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# data analytics
+prototypes/visualize/results*
+
+# os specific files
+.DS_Store
+
+# vim
+.*.swp
+/testbench/arthur/.env

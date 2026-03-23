@@ -1,0 +1,64 @@
+{
+  "devices": [
+    {
+      "id": "0",
+      "type": "server",
+      "lifetime": 4,
+      "average_load": {
+        "co": 0.2,
+        "me": 0.1,
+        "st": 0.5,
+        "tr": 0.02
+      },
+      "network": {
+        "type": "fibre",
+        "throughput": 25
+      },
+      "location": {
+        "lat": 50.0808102,
+        "lon": 8.6288849
+      },
+      "runtime": {
+        "gm": "debian",
+        "os": "Ubuntu 20.04",
+        "deps": ["Docker", "PostgreSQL"]
+      },
+      "reference": "device_specs/server_hpe_proliant_dl360_gen9.json"
+    },
+    {
+      "id": "1",
+      "type": "server",
+      "lifetime": 4,
+      "average_load": {
+        "co": 0.2,
+        "me": 0.1,
+        "st": 0.5,
+        "tr": 0.02
+      },
+      "network": {
+        "type": "fibre",
+        "throughput": 25
+      },
+      "location": {
+        "lat": 50.0808102,
+        "lon": 8.6288849
+      },
+      "runtime": {
+        "gm": "debian",
+        "os": "Ubuntu 20.04",
+        "deps": ["Docker", "PostgreSQL"]
+      },
+      "reference": "device_specs/server_hpe_proliant_dl360_gen9.json"
+    }
+  ],
+  "cloud_instances": [
+    {
+      "id": "cloud_instance1",
+      "reference": "cloud_specs/cloud_instance1.json"
+    },
+    {
+      "id": "cloud_instance2",
+      "reference": "cloud_specs/cloud_instance2.json"
+    }
+  ]
+}

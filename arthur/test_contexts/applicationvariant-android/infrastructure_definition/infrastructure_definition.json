@@ -1,0 +1,24 @@
+{
+  "devices": [
+    {
+      "id": "0",
+      "type": "mobile",
+      "lifetime": 4,
+      "average_load": {
+        "co": 0.2,
+        "me": 0.1,
+        "st": 0.5,
+        "tr": 0.02
+      },
+      "network": {
+        "type": "fibre",
+        "throughput": 25
+      },
+      "runtime": {
+        "gm": "emulator",
+        "os": "android"
+      },
+      "reference": "device_specs/mobile_samsung_galaxy_s21.json"
+    }
+  ]
+}

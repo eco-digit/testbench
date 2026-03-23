@@ -1,0 +1,14 @@
+.eco-insights {
+  &__environmentNumbers {
+    flex-wrap: wrap;
+    gap: var(--margin-m);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+
+    .box {
+      padding: var(--padding-s);
+      background-repeat: no-repeat;
+      background-position: calc(100% + 0.5rem) center;
+    }
+  }
+}

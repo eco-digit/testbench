@@ -1,0 +1,30 @@
+<header>
+  <div class="logo-section">
+    <a [routerLink]="['/']">
+      <img
+        src="assets/images/eco-digit_logo_black.svg"
+        alt="Logo"
+        class="logo"
+      />
+    </a>
+    <span class="mat-label-large">adesso SE</span>
+  </div>
+  <div class="icon-buttons">
+    <button
+      mat-mini-fab
+      aria-label="Login icon button with a person icon"
+      [matMenuTriggerFor]="menu"
+    >
+      <mat-icon>person</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>logout</span>
+      </button>
+    </mat-menu>
+    <app-notification
+      [showNotifications]="showNotifications"
+    ></app-notification>
+  </div>
+</header>

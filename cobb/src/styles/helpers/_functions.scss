@@ -1,0 +1,30 @@
+@use "sass:math";
+
+// Laut Ali ist es best practice rem direkt zu verwenden statt es umzuwandeln
+
+// Root font-size
+$font-size-base: 16px;
+
+/**
+ * This document includes a function for converting pixel values to rem units.
+ * The base font size is set to 16px by default, and the function allows for specifying a custom context.
+ *
+ * @param {number} $size - The size to be converted to rem units.
+ * @param {number} [$context=$font-size-base] - The context (base font size) for the conversion.
+ *
+ * @returns {number} - The calculated value in rem units.
+ *
+ * Usage: rem(16)
+ *
+ */
+@function rem($size, $context: $font-size-base) {
+  @if (unitless($size)) {
+    $size: $size * 1px;
+  }
+
+  @if (unitless($context)) {
+    $context: $context * 1px;
+  }
+
+  @return math.div($size, $font-size-base) * 1rem;
+}

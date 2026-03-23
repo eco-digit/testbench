@@ -1,0 +1,38 @@
+table inet measurement-0001 {
+    counter eames-1-0_in {
+        packets 0 bytes 0
+    }
+    counter eames-1-0_out {
+        packets 0 bytes 0
+    }
+    counter eames-1-1_in {
+        packets 0 bytes 0
+    }
+    counter eames-1-1_out {
+        packets 0 bytes 0
+    }
+    set eames-1-0 {
+        type ipv4_addr
+        size 256
+        flags dynamic
+    }
+    set eames-1-1 {
+        type ipv4_addr
+        size 256
+        flags dynamic
+    }
+    chain eames-1-0 {
+        type filter hook ingress device "vnet1" priority filter; policy accept;
+        ip daddr 172.16.25.0/24 update @eames-1-0 { ip daddr counter } accept
+        counter name "eames-1-0_out" accept
+        ip saddr 172.16.25.0/24 accept
+        ip daddr 172.16.25.2 counter name "eames-1-0_in" accept
+    }
+    chain eames-1-1 {
+        type filter hook ingress device "vnet2" priority filter; policy accept;
+        ip daddr 172.16.25.0/24 update @eames-1-1 { ip daddr counter } accept
+        counter name "eames-1-1_out" accept
+        ip saddr 172.16.25.0/24 accept
+        ip daddr 172.16.25.3 counter name "eames-1-1_in" accept
+    }
+}

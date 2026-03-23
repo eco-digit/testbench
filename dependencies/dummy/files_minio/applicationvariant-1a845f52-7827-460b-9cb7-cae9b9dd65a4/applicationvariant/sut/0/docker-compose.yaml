@@ -1,0 +1,10 @@
+services:
+  registry:
+    image: descartesresearch/teastore-registry
+    expose:
+      - "8080"
+    ports:
+      - "10000:8080"
+    environment:
+      HOST_NAME: "{{eco_digit_ip_0}}"
+      SERVICE_PORT: "10000"

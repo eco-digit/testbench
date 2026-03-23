@@ -1,0 +1,28 @@
+.eco-insights {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--margin-xl);
+  }
+
+  &__heading {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__charts {
+    display: flex;
+    gap: var(--margin-m);
+
+    &-ecoScore {
+      border-radius: 0.5rem;
+      flex: 2;
+      min-width: 0;
+    }
+
+    &-measurementAmount {
+      flex: 1;
+      min-width: 0;
+    }
+  }
+}

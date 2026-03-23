@@ -1,0 +1,44 @@
+{
+  "devices": [
+    {
+      "id": "0",
+      "type": "server",
+      "lifetime": 4,
+      "average_load": {
+        "co": 0.2,
+        "me": 0.1,
+        "st": 0.5,
+        "tr": 0.02
+      },
+      "network": {
+        "type": "fibre",
+        "throughput": 25
+      },
+      "runtime": {
+        "gm": "ubuntu-22-docker",
+        "os": "Ubuntu"
+      },
+      "reference": "device_specs/server_hpe_proliant_dl360_gen9_reduced.json"
+    },
+    {
+      "id": "1",
+      "type": "server",
+      "lifetime": 4,
+      "average_load": {
+        "co": 0.2,
+        "me": 0.1,
+        "st": 0.5,
+        "tr": 0.02
+      },
+      "network": {
+        "type": "fibre",
+        "throughput": 25
+      },
+      "runtime": {
+        "gm": "ubuntu-22-docker",
+        "os": "Ubuntu"
+      },
+      "reference": "device_specs/server_hpe_proliant_dl360_gen9_reduced.json"
+    }
+  ]
+}

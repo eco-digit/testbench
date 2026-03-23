@@ -1,0 +1,71 @@
+.eco-insights-details {
+  &__container-not-available {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    gap: var(--margin-xl);
+    margin: var(--margin-xxl);
+
+    mat-icon {
+      transform: scale(2.25);
+      color: var(--sys-on-surface-variant);
+      opacity: 0.16;
+      margin-top: var(--margin-xl);
+      margin-bottom: var(--margin-xl);
+    }
+
+    p {
+      color: var(--sys-on-surface-variant);
+    }
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--margin-l);
+    margin-top: var(--margin-xl);
+    flex-grow: 1;
+  }
+
+  &__info {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--margin-m);
+
+    .application-info {
+      display: flex;
+      gap: var(--margin-m);
+      flex-direction: column;
+
+      &__box {
+        display: flex;
+        flex-direction: column;
+        gap: var(--margin-xs);
+      }
+
+      &__general {
+        display: flex;
+        gap: var(--margin-m);
+
+        .time-info {
+          display: flex;
+          gap: var(--margin-xxs);
+          align-items: center;
+        }
+      }
+    }
+
+    .metric-info {
+      &__box {
+        display: flex;
+        flex-direction: column;
+        gap: var(--margin-xxs);
+        background-repeat: no-repeat;
+        background-position: calc(100% + 0.5rem) center;
+      }
+    }
+  }
+}

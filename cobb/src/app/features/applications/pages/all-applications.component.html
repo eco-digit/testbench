@@ -1,0 +1,11 @@
+<div class="all-applications__container">
+  <h1 class="mat-headline-medium">All Applications</h1>
+
+  <app-all-applications-table></app-all-applications-table>
+</div>
+<div class="floating-button" [ngClass]="{ 'sidebar-open': isHelpSidebarOpen }">
+  <button mat-fab extended (click)="openDialog()">
+    <mat-icon>add</mat-icon>
+    New Application
+  </button>
+</div>

@@ -1,0 +1,53 @@
+<div class="dashboard__application">
+  <div class="dashboard__application-title">
+    <h5 class="mat-headline-small">Applications</h5>
+    <button mat-button routerLink="/applications">Show all application</button>
+  </div>
+  <div class="metrics">
+    @for (metric of metrics; track $index) {
+      <div
+        class="application-box"
+        [ngClass]="{
+          critical: metric.title === 'Critical Measurements',
+        }"
+      >
+        <div>
+          <p class="mat-title-medium">{{ metric.title }}</p>
+          <p class="mat-body-small">{{ metric.subtitle }}</p>
+        </div>
+        <p class="mat-headline-medium">{{ metric.value }}</p>
+      </div>
+    }
+  </div>
+  <div class="dashboard__application-table">
+    <app-dashboard-table></app-dashboard-table>
+  </div>
+  <div class="dashboard__application-measurement">
+    <div class="dashboard__application-measurement-title">
+      <p class="mat-title-small">Last Measurement</p>
+    </div>
+
+    <div class="dashboard__application-measurement-container">
+      <mat-chip
+        class="dashboard__application-measurement-icon"
+        [ngClass]="statusColor"
+      >
+        <mat-icon class="dashboard__application-measurement-icon">
+          {{ statusIcon }}
+        </mat-icon>
+      </mat-chip>
+
+      <div class="dashboard__application-measurement-box">
+        <p class="mat-title-medium">{{ lastMeasurement?.name }}</p>
+        <p class="mat-body-small">{{ lastMeasurement?.measurementState }}</p>
+      </div>
+      <button
+        mat-button
+        class="dashboard__application-measurement-button"
+        [routerLink]="['/applications', lastMeasurement?.applicationId]"
+      >
+        Show application
+      </button>
+    </div>
+  </div>
+</div>

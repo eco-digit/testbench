@@ -1,0 +1,13 @@
+.all-artefacts {
+  &__container {
+    margin-top: var(--margin-l);
+  }
+}
+
+.mat-mdc-button > .mat-icon {
+  margin: 0;
+}
+
+.pause-icon {
+  color: var(--sys-error);
+}

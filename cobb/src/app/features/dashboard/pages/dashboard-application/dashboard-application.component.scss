@@ -1,0 +1,73 @@
+.dashboard {
+  &__application {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    &-title {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &-metrics {
+      display: flex;
+      gap: 1.5rem;
+
+      & > * {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+    }
+
+    &-box {
+      flex: 1;
+      justify-content: space-between;
+      padding: var(--padding-s);
+      height: 100%;
+    }
+
+    &-box > *:last-child {
+      margin-top: var(--margin-xxs);
+    }
+
+    &-measurement {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      &-container {
+        display: flex;
+        padding: 1rem 0 1rem 1rem;
+        align-items: center;
+        gap: 1rem;
+        flex: 1 0 0;
+        align-self: stretch;
+        border-radius: 0.75rem;
+        border: 1px solid var(--sys-surface-container);
+      }
+
+      &-icon {
+        border-radius: 6.18rem;
+        display: flex;
+        width: 2.5rem;
+        height: 2.5rem;
+        padding: var(--padding-s);
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      &-box {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      &-button {
+        width: 10rem;
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+<filter name='ecodigit-default' chain='root'>
+  <uuid>5a83583a-a9c2-472a-95d3-1e200fb3c429</uuid>
+  <rule action='drop' direction='inout' priority='1000'>
+    <ip srcipaddr='10.0.0.0' srcipmask='8' comment='Block internal network that arthur is in'/>
+  </rule>
+  <rule action='drop' direction='out' priority='100'>
+    <tcp dstipaddr='$IP' dstportstart='0' dstportend='52' comment='Restrict all ports below 53 (DNS) on TCP'/>
+  </rule>
+  <rule action='drop' direction='out' priority='100'>
+    <udp dstipaddr='$IP' dstportstart='0' dstportend='52' comment='Restrict all ports below 53 (DNS) on UDP'/>
+  </rule>
+  <rule action='drop' direction='out' priority='100'>
+    <tcp dstipaddr='$IP' dstportstart='54' dstportend='1023' comment='Restrict all common ports above 53 (DNS) on TCP'/>
+  </rule>
+  <rule action='drop' direction='out' priority='100'>
+    <udp dstipaddr='$IP' dstportstart='54' dstportend='1023' comment='Restrict all common ports above 53 (DNS) on TCP'/>
+  </rule>
+</filter>
+

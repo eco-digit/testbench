@@ -1,0 +1,33 @@
+{
+  "name": "eco_digit_mobile_backend_management",
+  "version": "0.0.1",
+  "description": "",
+  "license": "UNLICENSED",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "appium-adb": "^12.12.6",
+    "bullmq": "5.53.2",
+    "cors": "2.8.5",
+    "dotenv": "^17.0.0",
+    "express": "5.1.0",
+    "multer": "^2.0.1",
+    "redis-info": "3.1.0",
+    "tar": "^7.5.1",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@types/cors": "2.8.18",
+    "@types/express": "4.17.22",
+    "@types/mocha": "10.0.10",
+    "@types/multer": "^1.4.13",
+    "@types/redis-info": "3.0.3",
+    "ts-node": "10.9.2",
+    "tsc-watch": "7.1.1",
+    "typescript": "5.8.3"
+  }
+}

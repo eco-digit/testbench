@@ -1,0 +1,94 @@
+<div class="result__container">
+  <div class="result__top-container">
+    <div class="result__header">
+      <h5 class="mat-headline-medium">{{ name }}</h5>
+      <mat-chip-set>
+        <mat-chip
+          class="status-chip-custom"
+          [matTooltip]="tooltip"
+          matTooltipPosition="above"
+          [ngClass]="statusClass"
+          [disableRipple]="true"
+        >
+          <mat-icon matChipAvatar>
+            {{ icon }}
+          </mat-icon>
+          {{ stateDisplay }}
+        </mat-chip>
+      </mat-chip-set>
+      <mat-icon>calendar_today</mat-icon>
+      <span class="result__timestamp">
+        {{ this.lastUpdated }}
+      </span>
+      <button
+        mat-mini-fab
+        [matMenuTriggerFor]="menu"
+        #menuTrigger="matMenuTrigger"
+        aria-label="An icon-button with a menu"
+        class="result__more-menu"
+        [class.active]="menuTrigger.menuOpen"
+      >
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu" xPosition="before">
+        <button
+          mat-menu-item
+          (click)="downloadCsvFile()"
+          [disabled]="stateDisplay.toUpperCase() !== MeasurementState.COMPLETED"
+        >
+          <mat-icon>download</mat-icon>
+          <span>Export as CSV</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>delete</mat-icon>
+          <span>Delete Measurement</span>
+        </button>
+      </mat-menu>
+    </div>
+    <p class="mat-body-medium">
+      Measure energy efficiency of system version 1.2 compared to 1.1 under
+      load.
+    </p>
+  </div>
+  <mat-divider></mat-divider>
+</div>
+
+@if (stateDisplay.toUpperCase() === MeasurementState.COMPLETED) {
+  <app-result-details></app-result-details>
+} @else {
+  <div class="measurement-status">
+    <mat-icon class="measurement-status__icon">
+      {{ getStatusIcon() }}
+    </mat-icon>
+
+    <p class="measurement-status__heading mat-body-large">
+      {{ getStatusHeading() }}
+    </p>
+
+    @for (paragraph of getStatusDescription(); track $index) {
+      <p class="measurement-status__description mat-body-small">
+        {{ paragraph }}
+      </p>
+    }
+
+    @if (
+      stateDisplay.toUpperCase() === MeasurementState.FAILED ||
+      stateDisplay.toUpperCase() === MeasurementState.ABORTED
+    ) {
+      <button mat-button>
+        <mat-icon>download</mat-icon>export logs as .txt
+      </button>
+    }
+  </div>
+
+  <app-custom-stepper
+    class="custom-stepper"
+    [currentState]="detailedMeasurementState"
+  ></app-custom-stepper>
+
+  @if (stateDisplay !== "failed" && stateDisplay !== "aborted") {
+    <div class="result__button-abort">
+      <button mat-button><mat-icon>cancel</mat-icon>abort Measurement</button>
+    </div>
+  }
+}

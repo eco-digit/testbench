@@ -1,0 +1,167 @@
+services:
+    redis:
+        image: redis:8.2.2-alpine
+        ports:
+            - "6379:6379"
+        networks:
+            - management_network
+    appium:
+        image: appium/appium:v2.18.0-p0
+        networks:
+            - management_network
+            - internal_network
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+        environment:
+            - ANDROID_ADB_SERVER_ADDRESS=host.docker.internal
+        ports:
+            - "4723:4723"
+        profiles:
+          - IS_HEADFULL
+
+    manager:
+        build: ./backend/management
+        depends_on:
+            -   redis
+        networks:
+            - management_network
+        extra_hosts:
+          - "host.docker.internal:host-gateway"
+        environment:
+            - PORT=8081
+            - REDIS_HOST=redis
+            - REDIS_PORT=6379
+            - QUEUE_NAME_UI_TESTS_JOBS=EcoDigitJobsUITests
+            - QUEUE_NAME_ANALYZER_JOBS=EcoDigitJobsAnalyzer
+            - QUEUE_NAME_STATUS_UPDATES=EcoDigitJobsStatusUpdates
+            # Spezifizieren, welcher Ordner für das Teilen von Job-Dateien genutzt wird
+            - JOB_DATA_DIR=/job_data
+            - DELETE_JOB_DATA_DIR_ON_STARTUP=TRUE
+            # Dafür sorgen, dass ADB sich gerade mit dem ADB-Server des echten Rechners verbindet
+            - ANDROID_ADB_SERVER_ADDRESS=host.docker.internal
+            - HEADLESS_EMULATOR_AVAILABLE=false
+        ports:
+            - "8081:8081"
+        volumes:
+            -   "${ABSOLUT_PATH_TO_JOB_DATA_FOLDER}:/job_data"
+        profiles:
+          - IS_HEADFULL
+
+    manager_headless:
+      build: ./backend/management
+      depends_on:
+        - redis
+      networks:
+        - management_network
+      extra_hosts:
+        - "host.docker.internal:host-gateway"
+      environment:
+        - PORT=8081
+        - REDIS_HOST=redis
+        - REDIS_PORT=6379
+        - QUEUE_NAME_UI_TESTS_JOBS=EcoDigitJobsUITests
+        - QUEUE_NAME_ANALYZER_JOBS=EcoDigitJobsAnalyzer
+        - QUEUE_NAME_STATUS_UPDATES=EcoDigitJobsStatusUpdates
+        # Spezifizieren, welcher Ordner für das Teilen von Job-Dateien genutzt wird
+        - JOB_DATA_DIR=/job_data
+        - DELETE_JOB_DATA_DIR_ON_STARTUP=FALSE
+        - HEADLESS_EMULATOR_AVAILABLE=TRUE
+      ports:
+        - "8081:8081"
+      volumes:
+        - "${ABSOLUT_PATH_TO_JOB_DATA_FOLDER}:/job_data"
+      profiles:
+        - IS_HEADLESS
+
+    ui_test_worker:
+        build: ./backend/worker/ui-test-worker
+        depends_on:
+            - redis
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+        networks:
+            - management_network
+            - internal_network
+        volumes:
+            # Dafür sorgen, dass der Container selbst andere Docker container starten/stoppen kann
+            - "/var/run/docker.sock:/var/run/docker.sock"
+            # Den Ordner für geteilte Dateien mounten
+            - "${ABSOLUT_PATH_TO_JOB_DATA_FOLDER}:/job_data"
+        environment:
+            - REDIS_HOST=redis
+            - REDIS_PORT=6379
+            - QUEUE_NAME_INPUT=EcoDigitJobsUITests
+            - QUEUE_NAME_OUTPUT=EcoDigitJobsAnalyzer
+            - QUEUE_NAME_STATUS_UPDATES=EcoDigitJobsStatusUpdates
+            # Dafür sorgen, dass ADB sich gerade mit dem ADB-Server des echten Rechners verbindet
+            - ANDROID_ADB_SERVER_ADDRESS=host.docker.internal
+            # Spezifizieren, welcher Ordner für das Teilen von Job-Dateien genutzt wird
+            - JOB_DATA_DIR=/job_data
+            - HOST_PATH_TO_JOB_DIR=${ABSOLUT_PATH_TO_JOB_DATA_FOLDER}
+            - HOST_DOCKER_COMPOSE_PROJECT_NAME=${COMPOSE_PROJECT_NAME}
+            - TIME_OUT_IN_MINUTES=45
+
+    perfetto_analyzer:
+        build: ./backend/worker/perfetto-analyzer
+        depends_on:
+            - redis
+        networks:
+            - management_network
+        volumes:
+            # Den Ordner für geteilte Dateien mounten
+            - "${ABSOLUT_PATH_TO_JOB_DATA_FOLDER}:/job_data"
+        environment:
+            - REDIS_HOST=redis
+            - REDIS_PORT=6379
+            - QUEUE_NAME_INPUT=EcoDigitJobsAnalyzer
+            - QUEUE_NAME_STATUS_UPDATES=EcoDigitJobsStatusUpdates
+            - JOB_DATA_DIR=/job_data
+
+    frontend:
+        build:
+          context: ./frontend
+          args:
+            - VUE_APP_API_URL=http://127.0.0.1:8081
+            - PORT=80
+        depends_on:
+            - manager
+        ports:
+            - "8080:80"
+        profiles:
+          - IS_HEADFULL
+
+    rabbitmq:
+      image: rabbitmq:4-management
+      ports:
+        - "5672:5672"
+        - "8083:15672"
+      environment:
+        - RABBITMQ_DEFAULT_USER=miles
+        - RABBITMQ_DEFAULT_PASS=milesmilesmiles
+      networks:
+        - management_network
+      profiles:
+        - NEEDS_RABBITMQ
+
+    rabbit-relay:
+      build:
+        context: ./backend/worker/rabbit-relay
+      environment:
+        - REDIS_HOST=redis
+        - REDIS_PORT=6379
+        - RABBITMQ_HOST=rabbitmq
+        - RABBITMQ_PORT=5672
+        - RABBITMQ_USER=miles
+        - RABBITMQ_PASSWORD=milesmilesmiles
+        - QUEUE_NAME_INPUT=EcoDigitJobsStatusUpdates
+        - QUEUE_NAME_OUTPUT=EcoDigitStatusQueue
+      networks:
+        - management_network
+      profiles:
+        - RELAY_STATUS_MESSAGES
+
+networks:
+    management_network:
+
+    internal_network:
+        internal: true

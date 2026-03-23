@@ -1,0 +1,24 @@
+{
+  "name": "rabbit-relay",
+  "version": "0.0.1",
+  "description": "Worker, der Statusnachrichten der BullMQ-Queue an RabbitMQ weiterleitet",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "serve": "tsc && node ./dist/index.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "amqplib": "^0.10.9",
+    "bullmq": "^5.62.0",
+    "dotenv": "^17.2.3"
+  },
+  "devDependencies": {
+    "@types/amqplib": "^0.10.8",
+    "ts-node": "^10.9.2",
+    "tsc-watch": "^7.2.0",
+    "typescript": "^5.9.3"
+  }
+}

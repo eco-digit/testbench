@@ -1,0 +1,27 @@
+@if (showNotifications) {
+  <div class="notification-panel">
+    <div class="notification-header">
+      <span>Notifications ({{ notifications.length }})</span>
+      <button class="clear-button" (click)="clearAll()">Clear All</button>
+    </div>
+    <div class="notification-list">
+      @for (notification of notifications; track notification) {
+        <div class="notification-item">
+          <div class="notification-content">
+            <p>
+              <mat-icon class="check-circle-icon">check_circle</mat-icon>
+              <b>{{ notification.measurement }}</b>
+              <span>{{ notification.message }}</span>
+            </p>
+            <span class="timestamp">{{ notification.timestamp }}</span>
+          </div>
+          <mat-icon
+            (click)="removeNotification(notification)"
+            class="remove-icon"
+            >close</mat-icon
+          >
+        </div>
+      }
+    </div>
+  </div>
+}

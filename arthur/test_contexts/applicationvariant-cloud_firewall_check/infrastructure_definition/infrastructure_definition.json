@@ -1,0 +1,74 @@
+{
+  "devices": [
+    {
+      "id": "0",
+      "type": "server",
+      "description": "Public cloud instance",
+      "average_load": {
+        "co": 0.2,
+        "me": 0.1,
+        "st": 0.5,
+        "tr": 0.02
+      },
+      "network": {
+        "type": "fibre",
+        "throughput": 1
+      },
+      "runtime": {
+        "gm": "debian",
+        "os": "Debian 12"
+      },
+      "cloud_parameters": {
+        "provider": "aws",
+        "instance_type": "t2.medium",
+        "usage_location": "FRA",
+        "storage_size": 50
+      }
+    },
+    {
+      "id": "1",
+      "type": "server",
+      "description": "SCS cloud instance",
+      "average_load": {
+        "co": 0.2,
+        "me": 0.1,
+        "st": 0.5,
+        "tr": 0.02
+      },
+      "network": {
+        "type": "fibre",
+        "throughput": 1
+      },
+      "runtime": {
+        "gm": "debian",
+        "os": "Debian 12"
+      },
+      "cloud_parameters": {
+        "provider": "scs",
+        "instance_type": "SCS-2V-4",
+        "storage_size": 50
+      }
+    },
+    {
+      "id": "2",
+      "type": "server",
+      "description": "Classic dedicated instance",
+      "lifetime": 4,
+      "average_load": {
+        "co": 0.2,
+        "me": 0.1,
+        "st": 0.5,
+        "tr": 0.02
+      },
+      "network": {
+        "type": "fibre",
+        "throughput": 1
+      },
+      "runtime": {
+        "gm": "debian",
+        "os": "Debian 12"
+      },
+      "reference": "device_specs/server_hpe_proliant_dl360_gen9_tiny.json"
+    }
+  ]
+}

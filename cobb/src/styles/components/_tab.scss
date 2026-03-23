@@ -1,0 +1,4 @@
+@use "@angular/material" as mat;
+:root {
+  --mat-tab-header-active-label-text-color: var(--sys-primary);
+}

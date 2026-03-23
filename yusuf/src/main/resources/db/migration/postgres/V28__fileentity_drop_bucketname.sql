@@ -1,0 +1,1 @@
+ALTER TABLE fileentity DROP COLUMN bucketname;

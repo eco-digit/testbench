@@ -1,0 +1,148 @@
+{
+  "model": "HPE ProLiant DL360 Gen9",
+  "svhc_score": 5,
+  "cpu": {
+    "count": 1,
+    "cores": 2
+  },
+  "ram": {
+    "count": 1,
+    "size": 8
+  },
+  "ssd": {
+    "count": 4,
+    "size": 1
+  },
+  "performance": {
+    "compute": { "value": 128, "unit": "GHz*bit" },
+    "memorize": { "value": 8, "unit": "GB" },
+    "store": { "value": 4000, "unit": "GB" },
+    "transfer": { "value": 100, "unit": "Mbps" }
+  },
+    "power_profile_per_hardware": {
+    "CPU": {
+      "profile": { "0": 50,"20": 94, "100": 138 },
+      "avg": 70
+    },
+    "GPU": {
+      "profile": { "0": 10, "10": 20, "100": 30 },
+      "avg": 24
+    },
+    "RAM": {
+      "profile": { "0": 20, "100": 20 },
+      "avg": 20
+    },
+    "SSD": {
+      "profile": { "0": 10,  "100": 10 },
+      "avg": 10
+    },
+    "HDD": {
+      "profile": { "0": 20, "100": 20 },
+      "avg": 20
+    },
+    "NW": {
+      "profile": { "0": 5, "100": 5 },
+      "avg": 5
+    },
+    "total_avg": 174
+  },
+  "power_profile": {
+    "compute": {
+      "profile": { "0": 50,"20": 94, "100": 138 },
+      "avg": 109.8
+    },
+    "memorize": {
+      "profile": { "0": 20, "10": 20, "100": 20 },
+      "avg": 23.4
+    },
+    "store": {
+      "profile": { "0": 10, "50": 30, "100": 50 },
+      "avg": 35
+    },
+    "transfer": {
+      "profile": { "0": 5, "2": 5, "100": 5 },
+      "avg": 5.8
+    },
+    "total_avg": 174
+  },
+  "embedded": {
+    "CED": {
+      "CPU": 600.5525549,
+      "GPU": 0,
+      "RAM": 1031.089035,
+      "SSD": 1334.818571,
+      "PCB": 941.9772192,
+      "Chassis": 1080.556714,
+      "HDD": 0,
+      "PSUetc": 898.5168849,
+      "AssTest": 67.68598732,
+      "Ports": 150.5395016,
+      "Sum": 6105.736468
+    },
+    "GWP": {
+      "CPU": 43.10545406,
+      "GPU": 0,
+      "RAM": 81.71155063,
+      "SSD": 108.6863509,
+      "PCB": 75.80608105,
+      "Chassis": 79.82948071,
+      "HDD": 0,
+      "PSUetc": 62.67745921,
+      "AssTest": 4.721689696,
+      "Ports": 12.01914557,
+      "Sum": 468.5572118
+    },
+    "ADP": {
+      "CPU": 0.044859668,
+      "GPU": 0,
+      "RAM": 0.00944499,
+      "SSD": 0.005683154,
+      "PCB": 0.006829229,
+      "Chassis": 0.002750849,
+      "HDD": 0,
+      "PSUetc": 0.022607506,
+      "AssTest": 4.78e-06,
+      "Ports": 0.001320631,
+      "Sum": 0.093500811
+    },
+    "Water": {
+      "CPU": 11.72572703,
+      "GPU": 0,
+      "RAM": 27.46423885,
+      "SSD": 46.67670056,
+      "PCB": 35.23862074,
+      "Chassis": 24.28007056,
+      "HDD": 0,
+      "PSUetc": 24.89391761,
+      "AssTest": 0.925315498,
+      "Ports": 5.727789543,
+      "Sum": 176.9323804
+    },
+    "WEEE": {
+      "CPU": 0.1,
+      "GPU": 0.1,
+      "RAM": 0.1,
+      "SSD": 1,
+      "PCB": 1,
+      "Chassis": 14.6,
+      "HDD": 0,
+      "PSUetc": 3,
+      "AssTest": 0,
+      "Ports": 0.1,
+      "Sum": 20
+    },
+    "TOX": {
+      "CPU": 0.1,
+      "GPU": 0.1,
+      "RAM": 0.1,
+      "SSD": 0.1,
+      "PCB": 0.1,
+      "Chassis": 0.1,
+      "HDD": 0.1,
+      "PSUetc": 0.1,
+      "AssTest": 0.1,
+      "Ports": 0.1,
+      "Sum": 1
+    }
+  }
+}

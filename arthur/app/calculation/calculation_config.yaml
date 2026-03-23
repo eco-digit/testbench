@@ -1,0 +1,24 @@
+#Konstanten aus der Excel-Liste der Methodenskizze (Tabellenblätter EL_Software und PEF_Factors)
+emission_factors:
+  GWP: 0.421
+  CED: 8.37
+  ADP: 0.00000524
+  Water: 0.239
+  WEEE: 0
+  TOX: 0
+
+normalization_emission_factors:
+  CED: 576647.00
+  GWP: 7550.00
+  ADP: 0.06
+  Water: 11500.00
+  WEEE: 7.73
+  TOX: 0
+
+pef_weights:
+  CED: 0.20
+  GWP: 0.20
+  ADP: 0.20
+  Water: 0.20
+  WEEE: 0.20
+  TOX: 0

@@ -1,0 +1,19 @@
+debian:
+  ram_overhead: 42000 #KB
+  measured_on: "2025-04-03"
+  notes: "Debian 11, 512MB RAM"
+
+ubuntu:
+  ram_overhead: 42000 #KB
+  measured_on: "2025-04-03"
+  notes: "Ubuntu 22.04, 1GB RAM"
+
+ubuntu-22-docker:
+  ram_overhead: 42000 #KB
+  measured_on: "2025-04-03"
+  notes: "Ubuntu 22.04, 1GB RAM"
+
+emulator:
+  ram_overhead: 42000
+  measured_on: "never"
+  notes: "Placeholder"

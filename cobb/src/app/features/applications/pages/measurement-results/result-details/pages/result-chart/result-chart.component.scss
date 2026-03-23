@@ -1,0 +1,13 @@
+.chart__container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--margin-m);
+}
+
+.chart__legend-ellipse.per-phase {
+  background-color: var(--sys-primary);
+}
+
+.chart__legend-ellipse.cumulative {
+  background-color: var(--sys-on-primary-fixed-variant);
+}

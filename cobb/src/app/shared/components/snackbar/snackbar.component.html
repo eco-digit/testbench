@@ -1,0 +1,17 @@
+<div class="snackbar__container">
+  <div class="snackbar__content">
+    <div class="snackbar__message">
+      <mat-icon>
+        {{ getIcon() }}
+      </mat-icon>
+      <div class="snackbar__message-text">
+        <p>{{ data.message }}</p>
+      </div>
+    </div>
+    @if (data.type === SnackbarTypeEnum.ERROR) {
+      <mat-icon class="snackbar__button-close" (click)="close()"
+        >close</mat-icon
+      >
+    }
+  </div>
+</div>

@@ -1,0 +1,52 @@
+{
+  "devices": [
+    {
+      "id": "0",
+      "type": "edge",
+      "lifetime": 10,
+      "average_load": {
+        "co": 0.2,
+        "me": 0.1,
+        "st": 0.5,
+        "tr": 0.02
+      },
+      "network": {
+        "type": "fibre",
+        "throughput": 25
+      },
+      "location": {
+        "lat": 50.0808102,
+        "lon": 8.6288849
+      },
+      "runtime": {
+        "gm": "debian",
+        "os": "Ubuntu 20.04"
+      },
+      "reference": "device_specs/nanobox.json"
+    },
+    {
+      "id": "1",
+      "type": "edge",
+      "lifetime": 10,
+      "average_load": {
+        "co": 0.2,
+        "me": 0.1,
+        "st": 0.5,
+        "tr": 0.02
+      },
+      "network": {
+        "type": "fibre",
+        "throughput": 25
+      },
+      "location": {
+        "lat": 50.0808102,
+        "lon": 8.6288849
+      },
+      "runtime": {
+        "gm": "debian",
+        "os": "Ubuntu 20.04"
+      },
+      "reference": "device_specs/nanobox.json"
+    }
+  ]
+}

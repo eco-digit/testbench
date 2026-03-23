@@ -1,0 +1,36 @@
+<aside class="sidebar">
+  <div class="sidebar__button-container">
+    <div class="sidebar__button-box">
+      <a
+        [routerLink]="['/']"
+        class="sidebar__icon-link"
+        [ngClass]="{ 'sidebar__icon-link-active': isActive('/home') }"
+      >
+        <mat-icon>home</mat-icon>
+      </a>
+      <p class="sidebar__button-text">Overview</p>
+    </div>
+
+    <div class="sidebar__button-box">
+      <a
+        [routerLink]="['/eco-insights']"
+        class="sidebar__icon-link"
+        [ngClass]="{ 'sidebar__icon-link-active': isActive('#') }"
+      >
+        <mat-icon>query_stats</mat-icon>
+      </a>
+      <p class="sidebar__button-text">Eco Insights</p>
+    </div>
+
+    <div class="sidebar__button-box">
+      <a
+        [routerLink]="['/applications']"
+        class="sidebar__icon-link"
+        [ngClass]="{ 'sidebar__icon-link-active': isActive('/applications') }"
+      >
+        <mat-icon>list</mat-icon>
+      </a>
+      <p class="sidebar__button-text">Applications</p>
+    </div>
+  </div>
+</aside>

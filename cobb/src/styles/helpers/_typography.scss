@@ -1,0 +1,17 @@
+// “Die Typografie von Angular Material wird überschrieben, da sie sich im margin-bottom vom in Figma verwendeten Material Design 3 unterscheidet. Dabei wird der margin-bottom für alle Überschriftentags (h1–h5) entfernt.”
+html {
+  .mat-typography {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    p {
+      margin-bottom: 0 !important;
+    }
+  }
+
+  .mat-label-small {
+    color: var(--sys-outline);
+  }
+}

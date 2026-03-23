@@ -1,0 +1,2 @@
+ALTER TABLE measuremententity ADD COLUMN ecodigit_score INT; -- Sollten in Zukunft weitere Scores hinzukommen, würde sich ein auslagern in eine eigene Tabelle lohnen.
+ALTER TABLE measuremententity ADD COLUMN trigger VARCHAR(255);

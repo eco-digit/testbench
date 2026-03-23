@@ -1,0 +1,58 @@
+services:
+  persistence:
+    image: descartesresearch/teastore-persistence
+    expose:
+      - "8080"
+    ports:
+      - "1111:8080"
+    environment:
+      HOST_NAME: "{{eco_digit_ip_2}}"
+      SERVICE_PORT: "1111"
+      REGISTRY_HOST: "{{eco_digit_ip_0}}"
+      REGISTRY_PORT: "10000"
+      DB_HOST: "{{eco_digit_ip_1}}"
+      DB_PORT: "3306"
+  auth:
+    image: descartesresearch/teastore-auth
+    expose:
+      - "8080"
+    ports:
+      - "2222:8080"
+    environment:
+      HOST_NAME: "{{eco_digit_ip_2}}"
+      SERVICE_PORT: "2222"
+      REGISTRY_HOST: "{{eco_digit_ip_0}}"
+      REGISTRY_PORT: "10000"
+  recommender:
+    image: descartesresearch/teastore-recommender
+    expose:
+      - "8080"
+    ports:
+      - "3333:8080"
+    environment:
+      HOST_NAME: "{{eco_digit_ip_2}}"
+      SERVICE_PORT: "3333"
+      REGISTRY_HOST: "{{eco_digit_ip_0}}"
+      REGISTRY_PORT: "10000"
+  image:
+    image: descartesresearch/teastore-image
+    expose:
+      - "8080"
+    ports:
+      - "4444:8080"
+    environment:
+      HOST_NAME: "{{eco_digit_ip_2}}"
+      SERVICE_PORT: "4444"
+      REGISTRY_HOST: "{{eco_digit_ip_0}}"
+      REGISTRY_PORT: "10000"
+  webui:
+    image: descartesresearch/teastore-webui
+    expose:
+      - "8080"
+    ports:
+      - "8080:8080"
+    environment:
+      HOST_NAME: "{{eco_digit_ip_2}}"
+      SERVICE_PORT: "8080"
+      REGISTRY_HOST: "{{eco_digit_ip_0}}"
+      REGISTRY_PORT: "10000"

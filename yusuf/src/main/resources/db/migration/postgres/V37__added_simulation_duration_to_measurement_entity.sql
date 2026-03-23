@@ -1,0 +1,1 @@
+ALTER TABLE measuremententity ADD COLUMN simulation_duration double precision

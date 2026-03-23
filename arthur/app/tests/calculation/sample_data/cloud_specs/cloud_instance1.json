@@ -1,0 +1,21 @@
+{
+  "id": "cloud_instance1",
+  "region": "us-west-1",
+  "instance_type": "t3.medium",
+  "image_id": "ami-1234567890abcdef0",
+  "auto_scaling": true,
+  "min_instances": 1,
+  "max_instances": 3,
+  "cpu_credits": "unlimited",
+  "storage": {
+    "type": "gp2",
+    "size": 50
+  },
+  "network_interface": "subnet-123456",
+  "security_groups": ["default", "web-traffic"],
+  "iam_role": "web-app-role",
+  "tags": {
+    "env": "production",
+    "project": "my-web-app"
+  }
+}
