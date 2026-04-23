@@ -33,8 +33,8 @@ ______________________________________________________________________
 
 The testbench follows a containerized architecture using **Docker Compose** to manage and run its services.
 
-### Diagram
-
+### Diagrams
+![ECO:DIGIT architecture Diagram](documentation/img/eco_digit_architecture_diagram.png)
 ![ECO:DIGIT use-case Diagram](documentation/img/ecodigit_usecase_diagram.png)
 
 ### Services
