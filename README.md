@@ -1,9 +1,72 @@
-# testbench
-The testbench fullstack application for running and measuring scenarios
+# ECO:DIGIT Testbench
 
+The **ECO:DIGIT Testbench** is a modular application designed to support green computing and digital transformation through efficient containerized services and scalable architecture. It includes multiple services such as:
+
+- **Yusuf:** The backend for business logic and data processing.
+- **Arthur:** The service for job management and analytics.
+- **Cobb:** The frontend application providing a user-friendly interface.
+
+______________________________________________________________________
+## Table of Contents
+
+1. [About](#about)
+2. [Architecture](#architecture)
+3. [Technologies](#technologies)
+4. [Prerequisites](#prerequisites)
+5. [Installation](#installation)
+______________________________________________________________________
+
+## About
+
+The **ECO:DIGIT Testbench** is built to support projects focusing on sustainability and efficiency.\
+It enables green computing practices by containerizing services, optimizing resource utilization, and providing extensible modules for future development.
+
+The project includes:
+
+- **Cobb:** The Angular-based frontend application.
+- **Yusuf:** The Java-based backend application.
+- **Arthur:** A Python-based analytics and job processing module.
+- Supporting services like PostgreSQL, MinIO, MongoDB, and Git hosting.
+______________________________________________________________________
+
+## Architecture
+
+The testbench follows a containerized architecture using **Docker Compose** to manage and run its services.
+
+### Diagram
+
+![ECO:DIGIT use-case Diagram](documentation/img/ecodigit_usecase_diagram.png)
+
+### Services
+
+- **Yusuf:** Handles business logic, API endpoints, and database interaction.
+- **Arthur:** Processes background jobs and manages analytics workflows.
+- **Cobb:** The user-facing frontend application.
+- **PostgreSQL:** Stores relational data.
+- **MinIO:** Provides S3-compatible object storage.
+- **MongoDB:** Handles time-series metrics data.
+- **Git SSH/HTTP:** Manages repositories for development and data storage.
+
+______________________________________________________________________
+
+## Technologies
+
+The project uses a modern technology stack to ensure scalability, maintainability, and performance:
+
+- **Backend/Yusuf:** Spring Boot (Java 21)
+- **Frontend/Cobb:** Angular 18
+- **Analytics/Arthur:** Python
+- **Databases:**
+    - PostgreSQL for transactional data
+    - MongoDB for time-series data
+- **Storage:** MinIO for object storage
+- **Authentication:** Keycloak (OAuth2 and OpenID Connect)
+- **Containerization:** Docker and Podman
+
+______________________________________________________________________
 ## Setup Instructions
 
-### Prererquisites
+### Prerequisites
 
 - at least 16 GB of RAM (more recommended)
 - more cores than the total amount of cores you plan to simulate at the same time
@@ -23,13 +86,13 @@ First, connect to the server, via ssh or vs code remote.
 
 #### Install Docker
 
-- Follow the instructions at [Official Docker Installation Guide](https://docs.docker.com/engine/install/ubuntu/) to install Docker. Be sure to also install Docker Compose (should already be included in the linked instructions.) Afterwards, follow the [Linux postinstall](https://docs.docker.com/engine/install/linux-postinstall) instructions to allow Docker to be used without root.
+- Follow the instructions at [Official Docker Installation Guide](https://docs.docker.com/engine/install/ubuntu/) to install Docker. Be sure to also install Docker Compose (should already be included in the linked instructions.) Afterward, follow the [Linux postinstall](https://docs.docker.com/engine/install/linux-postinstall) instructions to allow Docker to be used without root.
 
-- after the postinstall instructions, relogin or reboot
+- after the postinstall instructions, login again or reboot
 
 #### Install dependencies
 
-- Most of ECO:DIGIT is executed via Docker. Creating GM-Images and running the Arthur container that orchestrates the virtual machines requires some virtualization software running on the host thuogh. Install these dependencies by running:
+- Most of ECO:DIGIT is executed via Docker. Creating GM-Images and running the Arthur container that orchestrates the virtual machines requires some virtualization software running on the host though. Install these dependencies by running:
 
 ```sh
 sudo apt update && sudo apt install -y qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virtinst virtiofsd nmap net-tools uuid-runtime sshpass gnupg curl python3-pip python3-nftables
@@ -80,7 +143,7 @@ sudo virt-install \
 --graphics none \
 --extra-args 'console=ttyS0'
 
-# follow the installation instructions as described in this repository under testbench/arthur/docs/gm-creation.md. You don't need to follow the advanced minimizations or any steps after that. It's especially important to user arthur/arthur as username/password and enable ssh in the installtion.
+# follow the installation instructions as described in this repository under testbench/arthur/docs/gm-creation.md. You don't need to follow the advanced minimizations or any steps after that. It's especially important to use arthur/arthur as username/password and enable ssh in the installation.
 
 # if you have shutdown the machine, restart it with:
 sudo virsh start --console eames-gm-ubu
