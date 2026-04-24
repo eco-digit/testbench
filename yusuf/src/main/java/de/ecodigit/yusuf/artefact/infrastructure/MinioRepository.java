@@ -96,4 +96,20 @@ public class MinioRepository {
       throw new MinioGetArtefactException("Failed to create output streams " + e.getMessage());
     }
   }
+
+  public void deleteFolder(String bucket, String prefix) {
+    try {
+      Iterable<Result<Item>> objects =
+          minioClient.listObjects(
+              ListObjectsArgs.builder().bucket(bucket).prefix(prefix).recursive(true).build());
+
+      for (Result<Item> result : objects) {
+        minioClient.removeObject(
+            RemoveObjectArgs.builder().bucket(bucket).object(result.get().objectName()).build());
+      }
+    } catch (Exception e) {
+      throw new MinioGetArtefactException(
+          "Fehler beim Löschen des Ordners in MinIO: " + prefix + " " + e.getMessage());
+    }
+  }
 }

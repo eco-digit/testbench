@@ -19,3 +19,9 @@ export interface TotalDashboardValues {
   totalApplications: number;
   totalCriticalMeasurements: number;
 }
+
+export interface TotalDashboardValues {
+  totalMeasurements: number;
+  totalApplications: number;
+  totalCriticalMeasurements: number;
+}

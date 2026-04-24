@@ -4,12 +4,14 @@ import de.ecodigit.yusuf.artefact.domain.ArtefactType;
 import de.ecodigit.yusuf.context.infrastructure.ContextEntity;
 import de.ecodigit.yusuf.gitrepomanagement.infrastructure.GitEntity;
 import de.ecodigit.yusuf.measurement.domain.DataSource;
+import de.ecodigit.yusuf.measurement.infrastructure.MeasurementEntity;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 import lombok.*;
 
@@ -44,11 +46,14 @@ public class ArtefactEntity {
 
   private boolean defaultFile;
 
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "context_id", referencedColumnName = "id", nullable = false)
   private ContextEntity context;
 
   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "git_id", referencedColumnName = "id")
   private GitEntity git;
+
+  @OneToMany(mappedBy = "artefact", cascade = CascadeType.REMOVE, orphanRemoval = true)
+  private List<MeasurementEntity> measurements;
 }

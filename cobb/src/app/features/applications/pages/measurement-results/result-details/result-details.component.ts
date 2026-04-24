@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MatIcon } from '@angular/material/icon';
-import { MatButton } from '@angular/material/button';
 import {
   ChartClickEvent,
   ResultChartComponent,
 } from '@features/applications/pages/measurement-results/result-details/pages/result-chart/result-chart.component';
-import { RoundUpPipe } from '@pipes/roundUp.pipe';
 import { NgStyle } from '@angular/common';
 import { DisplayMetric } from '@models/eco-insights';
 import {
@@ -41,13 +38,7 @@ const metricOrder: DetailNumericKey[] = [
 @Component({
   selector: 'app-result-details',
   standalone: true,
-  imports: [
-    MatIcon,
-    MatButton,
-    ResultChartComponent,
-    NgStyle,
-    ScientificFormatPipe,
-  ],
+  imports: [ResultChartComponent, NgStyle, ScientificFormatPipe],
   templateUrl: './result-details.component.html',
   styleUrl: './result-details.component.scss',
   providers: [],
@@ -92,8 +83,8 @@ export class ResultDetailsComponent implements OnInit {
       image: '/assets/images/abitoic.svg',
     },
     {
-      title: 'Ecotoxicity',
-      unit: 'in CTUe (TOX)',
+      title: 'Hazardous Substances Potential',
+      unit: 'in kg MEG-eq',
       value: 0,
       image: '/assets/images/toxity.svg',
     },

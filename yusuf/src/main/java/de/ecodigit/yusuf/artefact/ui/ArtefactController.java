@@ -127,4 +127,10 @@ public class ArtefactController {
       @Parameter(required = true) @PathVariable UUID artefactId) {
     return ResponseEntity.ok().body(artefactService.getArtefact(artefactId));
   }
+
+  @DeleteMapping("/{id}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void deleteArtefact(@PathVariable UUID id) {
+    artefactService.deleteArtefact(id);
+  }
 }

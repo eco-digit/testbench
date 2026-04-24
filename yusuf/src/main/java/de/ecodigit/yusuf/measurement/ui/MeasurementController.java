@@ -181,4 +181,10 @@ public class MeasurementController {
     return ResponseEntity.status(HttpStatus.OK)
         .body(measurementService.getMeasurementsOfArtefact(artefactId));
   }
+
+  @DeleteMapping("/{id}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void deleteMeasurement(@PathVariable UUID id) {
+    measurementService.deleteMeasurement(id);
+  }
 }

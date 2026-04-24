@@ -25,4 +25,8 @@ export class ArtefactsService {
   public getArtefactById(artefactId: string): Observable<ArtefactsOverviewDto> {
     return this.http.get<ArtefactsOverviewDto>(`${this.baseUrl}/${artefactId}`);
   }
+
+  deleteArtefacts(artefactId: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${artefactId}`);
+  }
 }

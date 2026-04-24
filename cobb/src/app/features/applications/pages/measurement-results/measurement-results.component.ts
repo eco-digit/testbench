@@ -6,7 +6,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MeasurementOverviewData } from '@models/measurement';
 import { FileDataService } from '@services/file-data.service';
 import { MeasurementService } from '@services/measurement.service';
@@ -21,6 +21,8 @@ import { HelpSidebarStateService } from '@services/help-sidebar-state.service';
 import { MeasurementState } from '@enums/measurement-state.enum';
 import { DATE_FORMAT } from '@constants/date-formats';
 import { ResultDetailsComponent } from '@features/applications/pages/measurement-results/result-details/result-details.component';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteMeasurementComponent } from '@features/applications/pages/measurement-results/delete-measurement/delete-measurement.component';
 
 @Component({
   selector: 'app-measurement-results',
@@ -44,6 +46,7 @@ import { ResultDetailsComponent } from '@features/applications/pages/measurement
 })
 export class MeasurementResultsComponent implements OnInit {
   applicationId: string | null = null;
+  contextId: string | null = null;
   measurementId: string | null = null;
   name: string = '';
   measurementState: string = '';
@@ -58,10 +61,12 @@ export class MeasurementResultsComponent implements OnInit {
   constructor(
     readonly measurementService: MeasurementService,
     readonly route: ActivatedRoute,
+    readonly router: Router,
     readonly date: DatePipe,
     readonly fileService: FileDataService,
     readonly snackbar: SnackbarService,
     readonly helpSidebarState: HelpSidebarStateService,
+    readonly dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -82,6 +87,8 @@ export class MeasurementResultsComponent implements OnInit {
     this.applicationId =
       this.route.parent?.snapshot.paramMap.get('applicationId') ?? null;
     this.measurementId = this.route.snapshot.paramMap.get('measurementId');
+    this.contextId =
+      this.route.parent?.snapshot.paramMap.get('contextId') ?? null;
   }
 
   private loadMeasurementData(): void {
@@ -209,6 +216,17 @@ export class MeasurementResultsComponent implements OnInit {
         },
       });
     }
+  }
+
+  openDeleteMeasurementDialog(): void {
+    this.dialog.open(DeleteMeasurementComponent, {
+      panelClass: 'dialog-delete-container',
+      data: {
+        measurementId: this.measurementId,
+        applicationId: this.applicationId,
+        contextId: this.contextId,
+      },
+    });
   }
 
   protected readonly MeasurementState = MeasurementState;

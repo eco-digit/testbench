@@ -40,14 +40,31 @@
           >
             <mat-expansion-panel-header>
               <mat-panel-title class="mat-title-medium">
-                Applications Variant
+                Artefact
               </mat-panel-title>
             </mat-expansion-panel-header>
             <p class="mat-body-medium">
-              Compare different versions of the application to identify the most
-              sustainable configuration. This section helps you understand the
-              environmental impact of each variant, guiding you towards the best
-              solution.
+              The entirety of all files required to start a measurement,
+              consisting of Usage Scenario, System Under Test, and
+              Infrastructure Definition.
+            </p>
+          </mat-expansion-panel>
+          <mat-expansion-panel
+            (opened)="panelOpenState.set(true)"
+            (closed)="panelOpenState.set(false)"
+          >
+            <mat-expansion-panel-header>
+              <mat-panel-title class="mat-title-medium">
+                Application Context
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p class="mat-body-medium">
+              An Application Context describes the context in which an overall
+              system can be analyzed and evaluated. It encompasses various
+              influencing factors and degrees of freedom that can affect the
+              measurement – for example, different deployment models (e.g.,
+              on-premises or cloud), as well as additional technical framework
+              conditions.
             </p>
           </mat-expansion-panel>
           <mat-expansion-panel
@@ -58,9 +75,8 @@
               <mat-panel-title> Infrastructure Definition </mat-panel-title>
             </mat-expansion-panel-header>
             <p class="mat-body-medium">
-              Get a detailed view of the infrastructure components required for
-              the application's operation. Review configurations and resources
-              to ensure they meet sustainability standards.
+              Formal description of the IT infrastructure and interfaces used in
+              the real-world scenario.
             </p>
           </mat-expansion-panel>
           <mat-expansion-panel
@@ -73,9 +89,8 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
             <p class="mat-body-medium">
-              Get a detailed view of the infrastructure components required for
-              the application's operation. Review configurations and resources
-              to ensure they meet sustainability standards.
+              A machine-readable definition of the interaction steps that are
+              executed for the simulated usage of a system.
             </p>
           </mat-expansion-panel>
         </mat-accordion>
