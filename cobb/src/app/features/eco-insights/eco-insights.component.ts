@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MatButton } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { EcoInsightChartComponent } from '@components/eco-insight-chart/eco-insight-chart.component';
 import { MeasurementBarChartComponent } from '@features/eco-insights/measurement-bar-chart/measurement-bar-chart.component';
@@ -13,7 +12,6 @@ import { RoundUpPipe } from '@pipes/roundUp.pipe';
   selector: 'app-eco-insights',
   standalone: true,
   imports: [
-    MatButton,
     MatIconModule,
     EcoInsightChartComponent,
     MeasurementBarChartComponent,
@@ -124,8 +122,8 @@ export class EcoInsightsComponent implements OnInit {
           image: '/assets/images/abitoic.svg',
         },
         {
-          title: 'Ecotoxicity',
-          unit: 'in CTUe (TOX)',
+          title: 'Hazardous Substances Potential',
+          unit: 'in kg MEG-eq',
           values: this.totalEcoToxity,
           image: '/assets/images/toxity.svg',
         },

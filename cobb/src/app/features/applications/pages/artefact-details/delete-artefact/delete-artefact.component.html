@@ -1,0 +1,15 @@
+<div class="dialog-delete-container">
+  <div class="icon-title-delete-container">
+    <h2 class="mat-headline-small">Delete Artefact?</h2>
+    <p class="dialog-delete__description mat-body-medium">
+      Are you sure you want to delete this artefact? This action is permanent
+      and will remove all associated measurements and results.
+    </p>
+  </div>
+  <mat-dialog-actions class="button-container">
+    <button mat-button mat-dialog-close class="cancel-button">Cancel</button>
+    <button mat-flat-button (click)="onSubmit()">
+      <mat-icon>delete</mat-icon>Delete Artefact
+    </button>
+  </mat-dialog-actions>
+</div>

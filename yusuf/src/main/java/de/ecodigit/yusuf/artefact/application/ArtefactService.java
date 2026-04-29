@@ -171,4 +171,19 @@ public class ArtefactService {
           "Failed to create ZipInputStream from artefact: " + e.getMessage());
     }
   }
+
+  @Transactional
+  public void deleteArtefact(UUID artefactId) {
+    ArtefactEntity artefact =
+        artefactRepository
+            .findById(artefactId)
+            .orElseThrow(() -> new ArtefactNotFoundException(artefactId));
+
+    String folderToDelete =
+        MinioRepository.AV_FOLDER_PREFIX + artefact.getId() + "/" + MinioRepository.AV_FOLDER + "/";
+
+    minioRepository.deleteFolder(MinioInitializer.APPLICATION_VARIANTS_BUCKET, folderToDelete);
+
+    artefactRepository.delete(artefact);
+  }
 }

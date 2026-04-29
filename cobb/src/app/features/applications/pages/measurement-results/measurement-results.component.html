@@ -31,15 +31,7 @@
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #menu="matMenu" xPosition="before">
-        <button
-          mat-menu-item
-          (click)="downloadCsvFile()"
-          [disabled]="stateDisplay.toUpperCase() !== MeasurementState.COMPLETED"
-        >
-          <mat-icon>download</mat-icon>
-          <span>Export as CSV</span>
-        </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="openDeleteMeasurementDialog()">
           <mat-icon>delete</mat-icon>
           <span>Delete Measurement</span>
         </button>

@@ -111,6 +111,7 @@ export class ApplicationContextDetailsComponent implements OnInit {
 
           this.normalizedMeasurements = completedMeasurements.map(
             (measurement) => ({
+              contextId: this.contextId,
               name: measurement.name,
               description: measurement.description,
               lastMeasurement: measurement,

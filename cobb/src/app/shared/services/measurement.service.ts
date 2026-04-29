@@ -166,4 +166,8 @@ export class MeasurementService {
       };
     });
   }
+
+  deleteMeasurement(measurementId: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${measurementId}`);
+  }
 }

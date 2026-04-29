@@ -1,18 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ApplicationContextTableComponent } from '@features/applications/pages/application-details/pages/application-context/application-context-table.component';
-import { CommonModule, DatePipe } from '@angular/common';
-import { EcoInsightsScreenComponent } from '@components/eco-insights-screen/eco-insights-screen.component';
+import { CommonModule } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 import { MatMiniFabButton } from '@angular/material/button';
-import {
-  MatTab,
-  MatTabChangeEvent,
-  MatTabGroup,
-  MatTabLabel,
-} from '@angular/material/tabs';
-import { ActivatedRoute, RouterOutlet } from '@angular/router';
+import { MatTab, MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HelpSidebarStateService } from '@services/help-sidebar-state.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteArtefactComponent } from '@features/applications/pages/artefact-details/delete-artefact/delete-artefact.component';
 import { MatTableModule } from '@angular/material/table';
 import { ArtefactsService } from '@features/applications/services/artefact.service';
 import { AllArtefactMeasurementsTableComponent } from '@features/applications/pages/artefact-details/pages/all-artefact-measurements-table/all-artefact-measurements-table.component';
@@ -21,19 +16,14 @@ import { AllArtefactMeasurementsTableComponent } from '@features/applications/pa
   selector: 'app-artefact-details',
   standalone: true,
   imports: [
-    ApplicationContextTableComponent,
-    DatePipe,
-    EcoInsightsScreenComponent,
     MatIcon,
     MatMenu,
     MatMenuItem,
     MatMiniFabButton,
     MatTab,
     MatTabGroup,
-    MatTabLabel,
     MatTableModule,
     CommonModule,
-    RouterOutlet,
     MatMenuTrigger,
     AllArtefactMeasurementsTableComponent,
   ],
@@ -44,6 +34,7 @@ export class ArtefactDetailsComponent implements OnInit {
   isHelpSidebarOpen = false;
 
   selectedTabIndex = 0;
+  applicationId!: string;
   contextId!: string;
   artefactId!: string;
   fileName?: string;
@@ -56,6 +47,8 @@ export class ArtefactDetailsComponent implements OnInit {
     private helpSidebarState: HelpSidebarStateService,
     private artefactsService: ArtefactsService,
     private route: ActivatedRoute,
+    readonly router: Router,
+    readonly dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -65,11 +58,26 @@ export class ArtefactDetailsComponent implements OnInit {
       return;
     }
     this.artefactId = artefactId;
+    this.contextId =
+      this.route.parent?.snapshot.paramMap.get('contextId') ?? '';
+    this.applicationId =
+      this.route.parent?.parent?.snapshot.paramMap.get('applicationId') ?? '';
     this.artefactsService
       .getArtefactById(this.artefactId)
       .subscribe((artefact) => {
         this.fileName = artefact.originalFileName;
       });
+  }
+
+  openDeleteArtefactDialog(): void {
+    this.dialog.open(DeleteArtefactComponent, {
+      panelClass: 'dialog-delete-container',
+      data: {
+        artefactId: this.artefactId,
+        applicationId: this.applicationId,
+        contextId: this.contextId,
+      },
+    });
   }
 
   onTabChange(event: MatTabChangeEvent) {

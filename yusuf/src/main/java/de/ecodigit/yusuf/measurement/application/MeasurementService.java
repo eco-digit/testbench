@@ -6,6 +6,8 @@ import de.ecodigit.yusuf.application.infrastructure.ApplicationRepository;
 import de.ecodigit.yusuf.artefact.application.exceptions.ArtefactNotFoundException;
 import de.ecodigit.yusuf.artefact.infrastructure.ArtefactEntity;
 import de.ecodigit.yusuf.artefact.infrastructure.ArtefactRepository;
+import de.ecodigit.yusuf.artefact.infrastructure.MinioRepository;
+import de.ecodigit.yusuf.config.MinioInitializer;
 import de.ecodigit.yusuf.context.infrastructure.ContextEntity;
 import de.ecodigit.yusuf.context.infrastructure.ContextRepository;
 import de.ecodigit.yusuf.gitrepomanagement.application.dtos.GitDto;
@@ -46,6 +48,7 @@ public class MeasurementService {
   private final GitEntityMapper gitEntityMapper;
   private final MeasurementEntityMapper measurementEntityMapper;
   private final ContextRepository contextRepository;
+  private final MinioRepository minioRepository;
 
   @Transactional
   public void createAndStartMeasurement(CreateMeasurementDto createMeasurementDto) {
@@ -267,5 +270,26 @@ public class MeasurementService {
       measurementRepository.save(measurementEntity);
       throw e;
     }
+  }
+
+  @Transactional
+  public void deleteMeasurement(UUID measurementId) {
+    MeasurementEntity measurement =
+        measurementRepository
+            .findById(measurementId)
+            .orElseThrow(() -> new MeasurementNotFoundException(measurementId));
+
+    String folderToDelete =
+        "applicationvariant-"
+            + measurement.getArtefact().getId()
+            + "/"
+            + "measurement-"
+            + measurement.getId()
+            + "/"
+            + "results/";
+
+    minioRepository.deleteFolder(MinioInitializer.APPLICATION_VARIANTS_BUCKET, folderToDelete);
+
+    measurementRepository.delete(measurement);
   }
 }
