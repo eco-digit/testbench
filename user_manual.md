@@ -18,7 +18,7 @@ Welcome to **ECO:DIGIT** (**E**nabling Green **CO**mputing and **DIGIT**al Trans
 
 This manual will help you understand and effectively use the application. EcoDigit is a user-friendly web application that runs in your browser and requires no installation on your own computer.
 
-The following sections mention the **ECO:DIGIT Score**. This is an independently developed metric, which is explained in more depth in the ECO:DIGIT Score Concept document.
+The following sections mention the **ECO:DIGIT Score**. This is an independently developed metric, which is explained in more depth in the ECO:DIGIT Score Concept document ECODIGIT_Score_Concept_EN.pdf.
 
 > **Note**: Installation instructions can be found in the `readme.md`.
 
