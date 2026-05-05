@@ -1,6 +1,6 @@
 # Backlog – Potential Further Development
 
-This chapter provides an overview of possible additional work packages that can be driven forward within the context of open-source development by communities.
+This backlog provides an overview of possible additional work packages that can be driven forward within the context of open-source development by communities.
 
 ---
 
