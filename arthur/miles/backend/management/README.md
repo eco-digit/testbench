@@ -1,30 +1,31 @@
 ## Management
-Eine Anwendung, welche für das Management der Test-Jobs zuständig ist.
+An application responsible for managing the test jobs.
 
-### Nutzen der Anwendung
+### Using the application
 
-Am einfachsten ist es, die Anwendung mithilfe der übergeordneten docker-compose Datei zu nutzen.
-Ansonsten kann die Anwendung aber auch wie folgt genutzt werden:
+The easiest way to use the application is via the parent docker-compose file.  
+Alternatively, the application can be used as follows:
 
-#### Bauen des Docker-Images
+#### Building the Docker image
 ```shell
 docker build -t manager:latest .
 ```
 
-#### Ausführen des Docker-Images
-Um das Docker-Image zu nutzen, müssen die folgenden Anforderungen erfüllt sein.
-Anschließend kann man es mit dem folgenden Befehl starten.
+#### Running the Docker image
+To use the Docker image, the following requirements must be met.  
+Afterwards, it can be started with the following command.
 
-#### Voraussetzungen
-- Es muss ein Netzwerk existieren, in dem auch die anderen Komponenten (z.b. der Redis-Server erreichbar sind). Die Docker-compose-Datei nutzt ein Netzwerk names `eco_digit_management_network`. Durch die Zuordnung zu der Compose-Datei wird das Prefix `testplatform_` hinzugefügt.
-- Es gibt einen Ordner, der zum Datentausch mit den anderen Services genutzt wird (`../../job_data`).
-- ADB läuft so, dass es wie hier konfiguriert (`ANDROID_ADB_SERVER_ADDRESS=host.docker.internal`) erreichbar ist
+#### Requirements
+- There must be a network in which the other components (e.g. the Redis server) are also reachable. The Docker-Compose file uses a network named `eco_digit_management_network`. By assigning it to the Compose file, the prefix `testplatform_` is added.
+- There is a folder that is used for data exchange with the other services (`../../job_data`).
+- ADB is running in such a way that it is reachable as configured here (`ANDROID_ADB_SERVER_ADDRESS=host.docker.internal`).
 
-Falls der Service auf einem Linux Server mit nested Virtualization gestartet wird und ein headless emulator verfügbar sein soll, muss die Umgebungsvariable `HEADLESS_EMULATOR_AVAILABLE` auf `true` gesetzt sein.
+If the service is started on a Linux server with nested virtualization and a headless emulator is to be available, the environment variable `HEADLESS_EMULATOR_AVAILABLE` must be set to `true`.
 
-#### Starten des Containers
+#### Starting the container
 ```shell
 docker run --rm --network testplatform_eco_digit_management_network --add-host host.docker.internal:host-gateway -v ../../job_data:/job_data --env REDIS_HOST=redis --env REDIS_PORT=6379 --env QUEUE_NAME_UI_TESTS_JOBS=EcoDigitJobsUITests --env QUEUE_NAME_ANALYZER_JOBS=EcoDigitJobsAnalyzer --env QUEUE_NAME_STATUS_UPDATES=EcoDigitJobsStatusUpdates --env JOB_DATA_DIR=/job_data --env DELETE_JOB_DATA_DIR_ON_STARTUP=TRUE --env ANDROID_ADB_SERVER_ADDRESS=host.docker.internal --env PORT=8081 -p 8081:8081 manager:latest
 ```
-#### Erreichbarkeit
-Nach dem Start ist der Container von Außen über Port 8081 erreichbar.
+
+#### Reachability
+After startup, the container is accessible externally via port 8081.
