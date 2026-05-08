@@ -11,6 +11,7 @@ from adapter.miles.models import MilesMeasurementResult
 from config import Config
 from guest import Guest
 from infrastructure_definition.models import Device
+from networking import NetworkGuest
 from util.rabbitmq_service import rabbitmq_listener
 
 logger = getLogger(__name__)

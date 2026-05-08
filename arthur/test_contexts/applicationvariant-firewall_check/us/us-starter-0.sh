@@ -83,3 +83,5 @@ if [ $? -eq 0 ]; then
 else
     echo "SUCCESS: SSH NOT AVAILABLE TO HOST (port 22 on $ip_address not available)"
 fi
+
+#wget https://releases.ubuntu.com/25.10/ubuntu-25.10-live-server-amd64.iso

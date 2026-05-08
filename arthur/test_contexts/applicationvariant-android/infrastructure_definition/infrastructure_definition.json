@@ -12,7 +12,15 @@
       },
       "network": {
         "type": "fibre",
-        "throughput": 25
+        "throughput": 25,
+        "network_calculation_parameters": {
+            "type": "5G_Campus",
+            "number_user_equipments_per_cell": 2,
+            "packet_size_uplink_bytes": [1500, 300],
+            "packet_size_downlink_bytes": [1500, 300],
+            "packet_size_uplink_probability": [0.5, 0.5],
+            "packet_size_downlink_probability": [0.5, 0.5]
+        }
       },
       "runtime": {
         "gm": "emulator",

@@ -12,6 +12,7 @@ from db import timescale_service
 from entities import MeasuredGuest, Measurement, DataSet
 from guest.mobile.mobile_guest import MobileGuest
 from infrastructure_definition.models import Device
+from mobile_networks.models.models import MobileNetworkProfile
 
 logger = getLogger(basename(__file__))
 
@@ -33,15 +34,21 @@ component_groups = {
 load_idle = {"CPU": 0.1, "GPU": 0, "RAM": 0.05, "SSDHDD": 0.25, "NW": 0.01}
 
 
-def calculate_score_mobile(mobile_guest: MobileGuest) -> float:
+def calculate_score_mobile(mobile_guest: MobileGuest, datasets: List[DataSet]) -> float:
     with open(f"{Path(__file__).parent}/calculation_config.yaml", "r") as file:
         config = yaml.safe_load(file)
 
     if mobile_guest.measurement_result is None:
         return 0.0
 
-    measurement_duration_in_s = mobile_guest.measurement_result.duration
-    measurement_consumption_in_kwh = mobile_guest.measurement_result.ws / 3600 / 1000
+    # 6.2) Calculate mobile network energy consumption
+    mobile_network_energy_consumption_in_wh = calc_network_energy_usage(
+        mobile_guest, datasets
+    )
+
+    measurement_consumption_in_kwh = (
+        mobile_guest.measurement_result.ws / 3600 / 1000
+    ) + (mobile_network_energy_consumption_in_wh / 1000)
 
     environmental_impacts = {
         "CED": measurement_consumption_in_kwh * config["emission_factors"]["CED"]
@@ -105,6 +112,7 @@ def calculate_single_eco_digit_score(
       6) Energy [kWh] = DW_SW × EBR_P / 3600 / 1000 → EI_usephase via emission factors
       7) Sum, normalization (PEF) & weighting → Eco:Digit-Score
     """
+    device = guest.device_definition
 
     # Load environmental constants for the calculation
     with open(f"{Path(__file__).parent}/calculation_config.yaml", "r") as file:
@@ -621,6 +629,113 @@ def interpolate_energy(power_profile_data, x):
         x1, y1 = x_values[-1], y_values[-1]
 
     return y0 + (y1 - y0) * (x - x0) / (x1 - x0)
+
+
+def calc_network_energy_usage(guest: Guest, datasets: List[DataSet]) -> float:
+
+    if guest.device_definition.network.network_calculation_parameters is None:
+        return 0.0
+    # 6.1) Mobile network energy consumption during execution
+
+    # Counters der Domain holen
+    counters = datasets[-1].network if datasets else {}
+
+    # IP des aktuellen Guests
+    guest_ip = guest.ip_address
+    # this was measured because counters don't represent bytes directly
+    counter_to_byte_factor = 70
+    # Eingehende Bytes: Wert unter guest_ip
+    incoming_bytes = int(counters.get(guest_ip, 0) or 0) * counter_to_byte_factor
+
+    # Ausgehende Bytes: Summe aller Adressen außer guest_ip und ohne "0.0.0.0"
+    outgoing_bytes = (
+        sum(
+            int(value or 0)
+            for key, value in counters.items()
+            if key not in {guest_ip, "0.0.0.0"}
+        )
+        * counter_to_byte_factor
+    )
+
+    #  measurement period in seconds
+    if len(datasets) < 2:
+        return 0.0
+    duration_evaluated_seconds = int(
+        datasets[-1].timestamp.timestamp() - datasets[0].timestamp.timestamp()
+    )
+
+    packet_size_downlink_bytes = (
+        guest.device_definition.network.network_calculation_parameters[
+            "packet_size_downlink_bytes"
+        ]
+    )
+    packet_size_downlink_probability = (
+        guest.device_definition.network.network_calculation_parameters[
+            "packet_size_downlink_probability"
+        ]
+    )
+    packet_size_uplink_bytes = (
+        guest.device_definition.network.network_calculation_parameters[
+            "packet_size_uplink_bytes"
+        ]
+    )
+    packet_size_uplink_probability = (
+        guest.device_definition.network.network_calculation_parameters[
+            "packet_size_uplink_probability"
+        ]
+    )
+
+    first_packet_size_downlink = packet_size_downlink_bytes[0]
+    second_packet_size_downlink = packet_size_downlink_bytes[1]
+    first_packet_size_uplink = packet_size_uplink_bytes[0]
+    second_packet_size_uplink = packet_size_uplink_bytes[1]
+
+    average_packet_size_downlink = (
+        first_packet_size_downlink * packet_size_downlink_probability[0]
+        + second_packet_size_downlink * packet_size_downlink_probability[1]
+    )
+    average_packet_size_uplink = (
+        first_packet_size_uplink * packet_size_uplink_probability[0]
+        + second_packet_size_uplink * packet_size_uplink_probability[1]
+    )
+
+    # calculate packet rates
+    packet_rate_downlink_per_second = (
+        incoming_bytes / average_packet_size_downlink / duration_evaluated_seconds
+    )
+    packet_rate_uplink_per_second = (
+        outgoing_bytes / average_packet_size_uplink / duration_evaluated_seconds
+    )
+
+    mobile_network_profile = MobileNetworkProfile(
+        NUMBER_OF_UES_PER_CELL=guest.device_definition.network.network_calculation_parameters[
+            "number_user_equipments_per_cell"
+        ],
+        UPLINK_PACKET_SIZE_BYTES=guest.device_definition.network.network_calculation_parameters[
+            "packet_size_uplink_bytes"
+        ],
+        DOWNLINK_PACKET_SIZE_BYTES=guest.device_definition.network.network_calculation_parameters[
+            "packet_size_downlink_bytes"
+        ],
+        UPLINK_PACKET_SIZE_PROBABILITY=guest.device_definition.network.network_calculation_parameters[
+            "packet_size_uplink_probability"
+        ],
+        DOWNLINK_PACKET_SIZE_PROBABILITY=guest.device_definition.network.network_calculation_parameters[
+            "packet_size_downlink_probability"
+        ],
+        UPLINK_PACKET_RATE=[
+            packet_rate_uplink_per_second,
+            packet_rate_uplink_per_second,
+        ],
+        DOWNLINK_PACKET_RATE=[
+            packet_rate_downlink_per_second,
+            packet_rate_downlink_per_second,
+        ],
+        UPLINK_PACKET_RATE_PROBABILITY=packet_size_uplink_probability,
+        DOWNLINK_PACKET_RATE_PROBABILITY=packet_size_downlink_probability,
+        DURATION_EVALUATED_SECONDS=duration_evaluated_seconds,
+    )
+    return mobile_networks_main.run_network(mobile_network_profile)
 
 
 def calculate_utilization_in_buckets(

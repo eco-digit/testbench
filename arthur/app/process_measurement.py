@@ -237,7 +237,7 @@ class MeasurementProcessor:
                 for index, prepared_guest in enumerate(self.prepared_guests):
                     if isinstance(prepared_guest, MobileGuest):
                         ecodigit_score = calculate_score_mobile(
-                            mobile_guest=prepared_guest
+                            mobile_guest=prepared_guest, datasets=datasets
                         )
                         timescale_service.save_measured_guest(
                             measured_guest=MeasuredGuest(

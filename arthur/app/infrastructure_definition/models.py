@@ -20,9 +20,20 @@ class AverageLoad:
 
 
 @dataclass
+class NetworkCalculationParameters:
+    type: str
+    number_user_equipments_per_cell: int
+    packet_size_uplink_bytes: List[float]
+    packet_size_downlink_bytes: List[float]
+    packet_size_uplink_probability: List[float]
+    packet_size_downlink_probability: List[float]
+
+
+@dataclass
 class Network:
     type: str
     throughput: float
+    network_calculation_parameters: Optional[NetworkCalculationParameters] = None
 
 
 @dataclass
