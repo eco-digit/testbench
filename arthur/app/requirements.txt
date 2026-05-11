@@ -29,6 +29,10 @@ SQLAlchemy==2.0.39
 pydantic==2.11.7
 pydantic-settings==2.10.1
 GitPython==3.1.44
+numpy
+dpkt
+docopt
+schema
 pytest
 requests==2.32.5
 pytest-cov

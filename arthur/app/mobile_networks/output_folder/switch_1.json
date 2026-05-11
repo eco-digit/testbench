@@ -1,0 +1,8 @@
+{
+    "power_consumption_W": 9.6,
+    "maximum_power_consumption_W": 9.6,
+    "idle_power_consumption_W": 9.6,
+    "dynamic_power_consumption_W": 9.6,
+    "duration_evaluated_seconds": 3600,
+    "energy_consumption_Wh": 9.6
+}

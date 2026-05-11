@@ -1,0 +1,9 @@
+{
+    "duration_evaluated_sec": 3600,
+    "radio_units_energy_consumption_Wh": 32.300000000000004,
+    "user_equipments_energy_consumption_Wh": 0.5700000000000001,
+    "distributed_centralized_units_energy_consumption_Wh": 250.0,
+    "core_network_servers_energy_consumption_Wh": 150.0,
+    "switches_energy_consumption_Wh": 9.6,
+    "total_energy_consumption_Wh": 442.47
+}
