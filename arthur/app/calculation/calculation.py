@@ -1,17 +1,18 @@
 from collections import defaultdict
+from datetime import datetime, timedelta
 from logging import getLogger
 from os.path import basename
 from pathlib import Path
-from datetime import datetime, timedelta
-from cloud.boavizta import calculate_hyperscaler
-
+from typing import List
 
 import yaml
+from cloud.boavizta import calculate_hyperscaler
 
-from db import timescale_service
 from entities import MeasuredGuest, Measurement, DataSet
+from guest import Guest
 from guest.mobile.mobile_guest import MobileGuest
 from infrastructure_definition.models import Device
+from mobile_networks import mobile_networks_main
 from mobile_networks.models.models import MobileNetworkProfile
 
 logger = getLogger(basename(__file__))
@@ -80,7 +81,7 @@ def calculate_score_mobile(mobile_guest: MobileGuest, datasets: List[DataSet]) -
 
 
 def calculate_single_eco_digit_score(
-    device: Device,
+    guest: Guest,
     measured_guest: MeasuredGuest,
     datasets: list[DataSet],
     time_execution,
@@ -212,6 +213,10 @@ def calculate_single_eco_digit_score(
             environmental_impacts_embedded,
         )
 
+        mobile_network_energy_consumption_in_wh = calc_network_energy_usage(
+            guest, datasets
+        )
+
         # 7) Energy consumption (kWh) during execution & use-phase EI
         runtime_energy_consumption_in_kWh = calc_runtime_energy_consumption(
             digital_work_by_dbr, ebr_p
@@ -219,6 +224,14 @@ def calculate_single_eco_digit_score(
         logger.debug(
             # relevant value for runtime validation
             "Energieverbrauch [kWh] (runtime_energy_consumption_in_kWh): %s",
+            runtime_energy_consumption_in_kWh,
+        )
+
+        runtime_energy_consumption_in_kWh["transfer"] += (
+            mobile_network_energy_consumption_in_wh / 1000
+        )
+        logger.debug(
+            "Energieverbrauch incl. Netzwerk [kWh] (runtime_energy_consumption_in_kWh): %s",
             runtime_energy_consumption_in_kWh,
         )
 
@@ -631,113 +644,6 @@ def interpolate_energy(power_profile_data, x):
     return y0 + (y1 - y0) * (x - x0) / (x1 - x0)
 
 
-def calc_network_energy_usage(guest: Guest, datasets: List[DataSet]) -> float:
-
-    if guest.device_definition.network.network_calculation_parameters is None:
-        return 0.0
-    # 6.1) Mobile network energy consumption during execution
-
-    # Counters der Domain holen
-    counters = datasets[-1].network if datasets else {}
-
-    # IP des aktuellen Guests
-    guest_ip = guest.ip_address
-    # this was measured because counters don't represent bytes directly
-    counter_to_byte_factor = 70
-    # Eingehende Bytes: Wert unter guest_ip
-    incoming_bytes = int(counters.get(guest_ip, 0) or 0) * counter_to_byte_factor
-
-    # Ausgehende Bytes: Summe aller Adressen außer guest_ip und ohne "0.0.0.0"
-    outgoing_bytes = (
-        sum(
-            int(value or 0)
-            for key, value in counters.items()
-            if key not in {guest_ip, "0.0.0.0"}
-        )
-        * counter_to_byte_factor
-    )
-
-    #  measurement period in seconds
-    if len(datasets) < 2:
-        return 0.0
-    duration_evaluated_seconds = int(
-        datasets[-1].timestamp.timestamp() - datasets[0].timestamp.timestamp()
-    )
-
-    packet_size_downlink_bytes = (
-        guest.device_definition.network.network_calculation_parameters[
-            "packet_size_downlink_bytes"
-        ]
-    )
-    packet_size_downlink_probability = (
-        guest.device_definition.network.network_calculation_parameters[
-            "packet_size_downlink_probability"
-        ]
-    )
-    packet_size_uplink_bytes = (
-        guest.device_definition.network.network_calculation_parameters[
-            "packet_size_uplink_bytes"
-        ]
-    )
-    packet_size_uplink_probability = (
-        guest.device_definition.network.network_calculation_parameters[
-            "packet_size_uplink_probability"
-        ]
-    )
-
-    first_packet_size_downlink = packet_size_downlink_bytes[0]
-    second_packet_size_downlink = packet_size_downlink_bytes[1]
-    first_packet_size_uplink = packet_size_uplink_bytes[0]
-    second_packet_size_uplink = packet_size_uplink_bytes[1]
-
-    average_packet_size_downlink = (
-        first_packet_size_downlink * packet_size_downlink_probability[0]
-        + second_packet_size_downlink * packet_size_downlink_probability[1]
-    )
-    average_packet_size_uplink = (
-        first_packet_size_uplink * packet_size_uplink_probability[0]
-        + second_packet_size_uplink * packet_size_uplink_probability[1]
-    )
-
-    # calculate packet rates
-    packet_rate_downlink_per_second = (
-        incoming_bytes / average_packet_size_downlink / duration_evaluated_seconds
-    )
-    packet_rate_uplink_per_second = (
-        outgoing_bytes / average_packet_size_uplink / duration_evaluated_seconds
-    )
-
-    mobile_network_profile = MobileNetworkProfile(
-        NUMBER_OF_UES_PER_CELL=guest.device_definition.network.network_calculation_parameters[
-            "number_user_equipments_per_cell"
-        ],
-        UPLINK_PACKET_SIZE_BYTES=guest.device_definition.network.network_calculation_parameters[
-            "packet_size_uplink_bytes"
-        ],
-        DOWNLINK_PACKET_SIZE_BYTES=guest.device_definition.network.network_calculation_parameters[
-            "packet_size_downlink_bytes"
-        ],
-        UPLINK_PACKET_SIZE_PROBABILITY=guest.device_definition.network.network_calculation_parameters[
-            "packet_size_uplink_probability"
-        ],
-        DOWNLINK_PACKET_SIZE_PROBABILITY=guest.device_definition.network.network_calculation_parameters[
-            "packet_size_downlink_probability"
-        ],
-        UPLINK_PACKET_RATE=[
-            packet_rate_uplink_per_second,
-            packet_rate_uplink_per_second,
-        ],
-        DOWNLINK_PACKET_RATE=[
-            packet_rate_downlink_per_second,
-            packet_rate_downlink_per_second,
-        ],
-        UPLINK_PACKET_RATE_PROBABILITY=packet_size_uplink_probability,
-        DOWNLINK_PACKET_RATE_PROBABILITY=packet_size_downlink_probability,
-        DURATION_EVALUATED_SECONDS=duration_evaluated_seconds,
-    )
-    return mobile_networks_main.run_network(mobile_network_profile)
-
-
 def calculate_utilization_in_buckets(
     utilization_timestamps, resolution=11, num_cores=1
 ):
@@ -861,3 +767,110 @@ def rounded_number(a, b):
     """Helper function to compare floating-point numbers"""
     threshold = abs(b - a) <= max(abs(a), abs(b)) * 1e-8
     return threshold
+
+
+def calc_network_energy_usage(guest: Guest, datasets: List[DataSet]) -> float:
+
+    if guest.device_definition.network.network_calculation_parameters is None:
+        return 0.0
+    # 6.1) Mobile network energy consumption during execution
+
+    # Counters der Domain holen
+    counters = datasets[-1].network if datasets else {}
+
+    # IP des aktuellen Guests
+    guest_ip = guest.ip_address
+    # this was measured because counters don't represent bytes directly
+    counter_to_byte_factor = 70
+    # Eingehende Bytes: Wert unter guest_ip
+    incoming_bytes = int(counters.get(guest_ip, 0) or 0) * counter_to_byte_factor
+
+    # Ausgehende Bytes: Summe aller Adressen außer guest_ip und ohne "0.0.0.0"
+    outgoing_bytes = (
+        sum(
+            int(value or 0)
+            for key, value in counters.items()
+            if key not in {guest_ip, "0.0.0.0"}
+        )
+        * counter_to_byte_factor
+    )
+
+    #  measurement period in seconds
+    if len(datasets) < 2:
+        return 0.0
+    duration_evaluated_seconds = int(
+        datasets[-1].timestamp.timestamp() - datasets[0].timestamp.timestamp()
+    )
+
+    packet_size_downlink_bytes = (
+        guest.device_definition.network.network_calculation_parameters[
+            "packet_size_downlink_bytes"
+        ]
+    )
+    packet_size_downlink_probability = (
+        guest.device_definition.network.network_calculation_parameters[
+            "packet_size_downlink_probability"
+        ]
+    )
+    packet_size_uplink_bytes = (
+        guest.device_definition.network.network_calculation_parameters[
+            "packet_size_uplink_bytes"
+        ]
+    )
+    packet_size_uplink_probability = (
+        guest.device_definition.network.network_calculation_parameters[
+            "packet_size_uplink_probability"
+        ]
+    )
+
+    first_packet_size_downlink = packet_size_downlink_bytes[0]
+    second_packet_size_downlink = packet_size_downlink_bytes[1]
+    first_packet_size_uplink = packet_size_uplink_bytes[0]
+    second_packet_size_uplink = packet_size_uplink_bytes[1]
+
+    average_packet_size_downlink = (
+        first_packet_size_downlink * packet_size_downlink_probability[0]
+        + second_packet_size_downlink * packet_size_downlink_probability[1]
+    )
+    average_packet_size_uplink = (
+        first_packet_size_uplink * packet_size_uplink_probability[0]
+        + second_packet_size_uplink * packet_size_uplink_probability[1]
+    )
+
+    # calculate packet rates
+    packet_rate_downlink_per_second = (
+        incoming_bytes / average_packet_size_downlink / duration_evaluated_seconds
+    )
+    packet_rate_uplink_per_second = (
+        outgoing_bytes / average_packet_size_uplink / duration_evaluated_seconds
+    )
+
+    mobile_network_profile = MobileNetworkProfile(
+        NUMBER_OF_UES_PER_CELL=guest.device_definition.network.network_calculation_parameters[
+            "number_user_equipments_per_cell"
+        ],
+        UPLINK_PACKET_SIZE_BYTES=guest.device_definition.network.network_calculation_parameters[
+            "packet_size_uplink_bytes"
+        ],
+        DOWNLINK_PACKET_SIZE_BYTES=guest.device_definition.network.network_calculation_parameters[
+            "packet_size_downlink_bytes"
+        ],
+        UPLINK_PACKET_SIZE_PROBABILITY=guest.device_definition.network.network_calculation_parameters[
+            "packet_size_uplink_probability"
+        ],
+        DOWNLINK_PACKET_SIZE_PROBABILITY=guest.device_definition.network.network_calculation_parameters[
+            "packet_size_downlink_probability"
+        ],
+        UPLINK_PACKET_RATE=[
+            packet_rate_uplink_per_second,
+            packet_rate_uplink_per_second,
+        ],
+        DOWNLINK_PACKET_RATE=[
+            packet_rate_downlink_per_second,
+            packet_rate_downlink_per_second,
+        ],
+        UPLINK_PACKET_RATE_PROBABILITY=packet_size_uplink_probability,
+        DOWNLINK_PACKET_RATE_PROBABILITY=packet_size_downlink_probability,
+        DURATION_EVALUATED_SECONDS=duration_evaluated_seconds,
+    )
+    return mobile_networks_main.run_network(mobile_network_profile)

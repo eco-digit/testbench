@@ -304,7 +304,7 @@ class MeasurementProcessor:
                             ):
                                 # Calculate Eco:Digit-Score
                                 calculation.calculate_single_eco_digit_score(
-                                    prepared_guest.device_definition,
+                                    prepared_guest,
                                     measured_guest,
                                     datasets=datasets,
                                     time_execution=MeasuredGuest.get_duration_of_dataset(
